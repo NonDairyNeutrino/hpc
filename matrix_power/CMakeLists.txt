@@ -1,4 +1,11 @@
+# Portions of this code were generated using ChatGPT3.5
 cmake_minimum_required(VERSION 3.7)
 project("matrix_power" LANGUAGES "Fortran")
-add_executable("matrix_power" "matrix_power.f90")
+
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+
+file(GLOB SOURCES "src/*.f90")
+
+# Generate the executable from the source files
+add_executable(matrix_power ${SOURCES})
 
