@@ -21,6 +21,11 @@ program allocatable
     print *, "Power: "
     read(*, *) power
 
+    do while (power < 1)
+        print *, "Please enter a positive integer"
+        read(*, *) power
+    end do
+
     ! check if identity matrix should be used
     print *, "Use identity matrix? (y/n) " ! TODO: add error checking
     read(*, *) is_id
