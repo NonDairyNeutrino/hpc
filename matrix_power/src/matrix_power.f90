@@ -40,10 +40,13 @@ program allocatable
 
     matrix_power = matrix ! initialize matrix_power as the matrix itself.
 
-    ! multiply the matrix by itself power times
-    do i = 1, power - 1
-        matrix_power = matmul(matrix, matrix_power)
-    end do
+    ! if power == 1, power_matrix == matrix
+    if (power /= 1) then
+        ! multiply the matrix by itself power times
+        do i = 2, power
+            matrix_power = matmul(matrix, matrix_power)
+        end do
+    end if
 
     ! print matrix_power to the screen
     do j = 1, matrix_dimension
