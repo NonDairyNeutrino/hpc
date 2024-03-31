@@ -1,4 +1,5 @@
 program allocatable
+    use iso_fortran_env, only: real64
     use matrices
     use io
     implicit none
@@ -7,8 +8,8 @@ program allocatable
     integer :: matrix_dimension
     integer :: power
     integer :: is_id
-    real, allocatable :: matrix(:, :)
-    real, allocatable :: matrix_power(:, :)
+    real*16, allocatable :: matrix(:, :) ! TODO: figure out wtf is going on with the types
+    real*16, allocatable :: matrix_power(:, :)
     ! loop iterators
     integer :: i
     integer :: j

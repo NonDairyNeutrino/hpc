@@ -10,7 +10,7 @@ module matrices
 contains
     ! print matrix to standard output
     subroutine print_matrix(A)
-        real, intent(in) :: A(:,:)
+        real*16, intent(in) :: A(:,:)
         integer :: i
         do i = 1, size(A, 1)
             print *, A(i,:) ! print row by row
@@ -24,8 +24,8 @@ contains
     function matrix_product(A, B) result (C)
         implicit none
         ! input declarations
-        real, intent(in) :: A(:,:)
-        real, intent(in) :: B(:,:)
+        real*16, intent(in) :: A(:,:)
+        real*16, intent(in) :: B(:,:)
         ! output declartions
         real, allocatable:: C(:,:)
         ! iterator declarations
