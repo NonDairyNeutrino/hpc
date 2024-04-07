@@ -20,6 +20,8 @@ echo "BUILDING IN $BUILD_PATH"                                                > 
 cmake -B $BUILD_PATH                                                         >> $BUILD_LOG_PATH # creates a Makefile in build/
 echo "${GREEN}BUILD FILES AND MAKEFILE GENERATED IN ${BLUE}$BUILD_PATH${NC}" >> $BUILD_LOG_PATH 
 
+echo ""                                                                      >> $BUILD_LOG_PATH
+
 echo "GENERATING EXECUTABLE IN $BIN_PATH"                                    >> $BUILD_LOG_PATH
 make --directory $BUILD_PATH                                                &>> $BUILD_LOG_PATH # creates the executable in bin/
 if [ $? -eq 0 ]; then
@@ -27,6 +29,8 @@ if [ $? -eq 0 ]; then
 else
     echo -e "${RED}COMPILE ERROR; SEE ${BLUE}$BUILD_LOG_PATH${NC}"           >> $BUILD_LOG_PATH
 fi
+
+echo ""                                                                      >> $BUILD_LOG_PATH
 
 echo "GENERATING DOCUMENTATION IN $DOCS_PATH"                                >> $BUILD_LOG_PATH
 doxygen                                                                      >> $BUILD_LOG_PATH
