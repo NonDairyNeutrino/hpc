@@ -1,16 +1,16 @@
 !> @file matrices_module.f90
 !! @brief Functionality for common matrix operations
 module matrices
+    use, intrinsic :: iso_fortran_env, only : qp => real128
     implicit none
     public
     
 contains
     !> @brief Print matrix to standard output
-    !! @param[in] A The matrix to be printed
+    !! @param[inout] A The matrix to be printed
     subroutine print_matrix(A)
         implicit none
-        ! @todo Change type to real128
-        real*16, intent(in) :: A(:,:)
+        real(qp), intent(in) :: A(:,:)
         integer :: i
         do i = 1, size(A, 1)
             print *, A(i,:) ! print row by row
@@ -25,11 +25,10 @@ contains
     function matrix_product(A, B) result (C)
         implicit none
         ! input declarations
-        ! @todo Change type to real128
-        real*16, intent(in) :: A(:,:)
-        real*16, intent(in) :: B(:,:)
+        real(qp), intent(in) :: A(:,:)
+        real(qp), intent(in) :: B(:,:)
         ! output declartions
-        real, allocatable:: C(:,:)
+        real(qp), allocatable:: C(:,:)
         ! iterator declarations
         integer :: i
         integer :: j
