@@ -1,0 +1,7 @@
+*.sh  diff=bash
+*.bib diff=bibtex
+*.cpp diff=cpp
+*.f90 diff=fortran
+*.md  diff=markdown
+*.py  diff=python
+*.tex diff=tex
