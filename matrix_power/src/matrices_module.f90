@@ -7,7 +7,6 @@ module matrices
 contains
     !> @brief Print matrix to standard output
     !! @param[in] A The matrix to be printed
-    !! @return The matrix printed to standard output
     subroutine print_matrix(A)
         implicit none
         ! @todo Change type to real128
@@ -19,10 +18,9 @@ contains
         end do
     end subroutine print_matrix
 
-    !> @brief Mmultiply two matrices
+    !> @brief Multiply two matrices
     !! @param[in] A An NxM matrix
     !! @param[in] B An MxL matrix
-    !! @param[out] C An NxL matrix
     !! @return The product of the two input matrices
     function matrix_product(A, B) result (C)
         implicit none
