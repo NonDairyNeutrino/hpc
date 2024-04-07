@@ -1,29 +1,33 @@
-! define functions and subroutines to support matrix operations such as
-! matrix multiplication
-! matrix powers
-! printing a matrix
-
+!> @file matrices_module.f90
+!! @brief Functionality for common matrix operations
 module matrices
     implicit none
     public
     
 contains
-    ! print matrix to standard output
+    !> @brief Print matrix to standard output
+    !! @param[in] A The matrix to be printed
+    !! @return The matrix printed to standard output
     subroutine print_matrix(A)
+        implicit none
+        ! @todo Change type to real128
         real*16, intent(in) :: A(:,:)
         integer :: i
         do i = 1, size(A, 1)
             print *, A(i,:) ! print row by row
-                        ! otherwise will print everything in one line
+                            ! otherwise will print everything in one line
         end do
     end subroutine print_matrix
 
-    ! multiply two matrices
-    ! inputs: NxM matrix A, MxL matrix B
-    ! outputs: NxL matrix C
+    !> @brief Mmultiply two matrices
+    !! @param[in] A An NxM matrix
+    !! @param[in] B An MxL matrix
+    !! @param[out] C An NxL matrix
+    !! @return The product of the two input matrices
     function matrix_product(A, B) result (C)
         implicit none
         ! input declarations
+        ! @todo Change type to real128
         real*16, intent(in) :: A(:,:)
         real*16, intent(in) :: B(:,:)
         ! output declartions
