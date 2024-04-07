@@ -25,8 +25,10 @@ echo ""                                                                      >> 
 echo "GENERATING EXECUTABLE IN $BIN_PATH"                                    >> $BUILD_LOG_PATH
 make --directory $BUILD_PATH                                                &>> $BUILD_LOG_PATH # creates the executable in bin/
 if [ $? -eq 0 ]; then
+    echo "${GREEN}GENERATED EXECUTABLE IN ${BLUE}$BIN_PATH${NC}"
     echo "${GREEN}GENERATED EXECUTABLE IN ${BLUE}$BIN_PATH${NC}"             >> $BUILD_LOG_PATH
 else
+    echo -e "${RED}COMPILE ERROR; SEE ${BLUE}$BUILD_LOG_PATH${NC}"
     echo -e "${RED}COMPILE ERROR; SEE ${BLUE}$BUILD_LOG_PATH${NC}"           >> $BUILD_LOG_PATH
 fi
 
