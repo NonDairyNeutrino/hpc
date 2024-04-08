@@ -12,8 +12,8 @@ To build the make files, generate the executable, and run it, use either the
 included build script
 
 ```bash
-./build.sh         # builds and generates the project
-./bin/matrix_power # runs the executable
+./build.sh                                      # builds and generates the project
+./bin/matrix_power matrix_dimension power is_id # runs the executable
 ```
 
 or build manually
