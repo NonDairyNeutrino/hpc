@@ -1,10 +1,15 @@
-# python implementation of matrix multiplication
+"""! @file matrix_power_python.py
+@brief python implementation of matrix powers
+"""
 import copy as cp
 import sys
+
 def matrix_multiply(A, B):
-    # multiply two matrices
-    # inputs: two matrices
-    # outputs: the product of the input matrices
+    """! @brief Multiply two matrices
+    @param[in] A The left matrix
+    @param[in] B The right matrix
+    @return The product of the two matrices
+    """
     product = [[0 for j in range(len(B))] for i in range(len(A))]
     for i in range(len(A)):
         for j in range(len(B[1])):
@@ -12,6 +17,11 @@ def matrix_multiply(A, B):
     return product
 
 def matrix_power(p, A):
+    """! @brief Calculate the power of a matrix
+    @param[in] p The exponent
+    @param[in] A The matrix
+    @return The power of the matrix
+    """
     if p == 1:
         return A
     else:
