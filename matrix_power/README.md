@@ -21,32 +21,16 @@ or build manually
 ```bash
 cmake -B build         # creates a Makefile in build/
 make --directory build # creates the executable in bin/
+doxygen                # generates documentation
 ./bin/matrix_power     # runs the executable
 ```
 
 ## Dependencies
-This project depends on a few keys softwares
+In order to build this project from source, dependencies are needed.
 - FORTRAN Compiler: GNU Fortran (GCC) 13.2.1 20230801
 - Build Platform  : cmake version 3.28.3, GNU Make 4.4.1
 - Scripting lang  : Python 3.11.8
+- Documenter      : Doxygen 1.10.0 
 
 ### FORTRAN COMPILER
-The FORTRAN compiler used to create this project is the "GNU Fortran Project"'s `GFortran` version 13.2.1.  `GFortran` can be installed on Linux based systems with
-
-#### Debian-based (Debian, Ubuntu, Mint, etc…)
-
-```bash
-sudo apt install gfortran
-```
-
-#### RPM-based (Red Hat Enterprise Linux, CentOS, Fedora, openSUSE)
-```bash
-sudo dnf install gcc-gfortran
-```
-
-#### Arch-based (Arch Linux, EndeavourOS, Manjaro, etc…)
-```bash
-sudo pacman -Syu gcc-fortran
-```
-
-More information such as installing on other distributions, Windows, or MacOS can be found on the [FORTRAN website](https://fortran-lang.org/en/learn/os_setup/install_gfortran/#linuxFORTRAN).
+The FORTRAN compiler used to create this project is the "GNU Fortran Project"'s `GFortran` version 13.2.1.  While `GFortran` was used, `gcc` should also work.
