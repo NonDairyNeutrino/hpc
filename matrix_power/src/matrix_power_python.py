@@ -1,8 +1,9 @@
 """! @file matrix_power_python.py
 @brief python implementation of matrix powers
 """
-import copy as cp
-import sys
+from copy import copy
+from sys import argv
+from random import random
 
 def matrix_multiply(A, B):
     """! @brief Multiply two matrices
@@ -25,11 +26,14 @@ def matrix_power(p, A):
     if p == 1:
         return A
     else:
-        power = cp.copy(A)
+        power = copy(A)
         for i in range(p - 1):
             power = matrix_multiply(A, power)
         return power
 
-p = int(sys.argv[1])
-matrix = [[2,0,0],[0,2,0],[0,0,2]]
-print(matrix_power(p, matrix))
+matrix_dimension, power = argv[1:]
+matrix_dimension        = int(matrix_dimension)
+power                   = int(power)
+
+matrix = [[random() for col in range(matrix_dimension)] for row in range(matrix_dimension)]
+print(matrix_power(power, matrix))
