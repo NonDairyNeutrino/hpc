@@ -1,5 +1,6 @@
 TODO
 - implement matrices with doubly-linked lists only for 2D arrays
+-- maybe use https://rosettacode.org/wiki/Doubly-linked_list/Definition#Fortran
 - use linked lists for large matrices
 - calculate time complexity of power
 - plot run time for different dimensions and powers
