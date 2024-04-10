@@ -1,4 +1,4 @@
-!> @file matrix_power.f90
+!> @file main.f90
 !! @brief Main program to calculate the power of a matrix
 program allocatable
     use matrices

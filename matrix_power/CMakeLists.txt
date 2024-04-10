@@ -7,5 +7,5 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 file(GLOB SOURCES "src/*.f90")
 
 # Generate the executable from the source files
-add_executable(matrix_power ${SOURCES})
+add_executable(main ${SOURCES})
 
