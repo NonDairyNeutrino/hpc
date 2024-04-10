@@ -46,4 +46,22 @@ contains
             end do
         end do
     end function matrix_product
+
+    !> @brief Calculate the power of a matrix
+    !! @param[in] mat The base matrix
+    !! @param[in] power The power
+    !! @return The matrix raised to the power
+    function matrix_power(mat, power)
+        implicit none
+        real(qp), intent(in) :: mat(:, :)
+        integer,  intent(in) :: power
+        real(qp)             :: matrix_power(size(mat, 1), size(mat, 2))
+        ! dummy variables
+        integer :: i
+
+        matrix_power = mat ! initialize for shape
+        do i = 1, power
+            matrix_power = matrix_multiply(mat, matrix_power)
+        end do
+    end function matrix_power
 end module matrices
