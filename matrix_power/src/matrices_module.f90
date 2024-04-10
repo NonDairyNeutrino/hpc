@@ -61,7 +61,7 @@ contains
 
         matrix_power = mat ! initialize for shape
         do i = 1, power
-            matrix_power = matrix_multiply(mat, matrix_power)
+            matrix_power = matrix_product(mat, matrix_power)
         end do
     end function matrix_power
 end module matrices

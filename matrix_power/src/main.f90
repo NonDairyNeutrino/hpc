@@ -6,15 +6,15 @@ program allocatable
     use, intrinsic :: iso_fortran_env, only : qp => real128
     implicit none
 
-    ! variable declarations
+    !> variable declarations
     integer :: parameters(3)
     integer :: matrix_dimension
     integer :: power
     integer :: is_id
     real(qp), allocatable :: matrix(:, :)
-    real(qp), allocatable :: matrix_power(:, :)
+    real(qp), allocatable :: power_matrix(:,:)
 
-    ! loop iterators
+    !> loop iterators
     integer :: i
     integer :: j
 
@@ -33,22 +33,14 @@ program allocatable
     end if
 
 
-    allocate(matrix_power(matrix_dimension, matrix_dimension))
-    matrix_power = matrix !> initialize matrix_power as the matrix itself.
-
-    !> if power == 1, power_matrix == matrix
-    if (power /= 1) then
-        ! multiply the matrix by itself power times
-        do i = 2, power
-            matrix_power = matrix_product(matrix, matrix_power)
-        end do
-    end if
+    allocate(power_matrix(matrix_dimension, matrix_dimension))
+    power_matrix = matrix_power(matrix, power)
 
     !> print matrix_power to the screen
-    call print_matrix(matrix_power)
+    call print_matrix(power_matrix)
 
     !> free memory used by matrices
-    deallocate(matrix_power)
+    deallocate(power_matrix)
     deallocate(matrix)
 end program allocatable
 
