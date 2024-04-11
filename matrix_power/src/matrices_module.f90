@@ -63,6 +63,7 @@ contains
         else
             matrix_power = mat ! initialize for shape
             do i = 2, power
+                print '(A, I5, A, I5)', "Beginning power: ", i, "/", power
                 matrix_power = matrix_product(mat, matrix_power)
             end do
         end if
