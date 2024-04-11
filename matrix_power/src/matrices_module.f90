@@ -58,10 +58,13 @@ contains
         real(qp)             :: matrix_power(size(mat, 1), size(mat, 2))
         ! dummy variables
         integer :: i
-
-        matrix_power = mat ! initialize for shape
-        do i = 1, power
-            matrix_power = matrix_product(mat, matrix_power)
-        end do
+        if (power == 1) then
+            matrix_power = mat
+        else
+            matrix_power = mat ! initialize for shape
+            do i = 2, power
+                matrix_power = matrix_product(mat, matrix_power)
+            end do
+        end if
     end function matrix_power
 end module matrices
