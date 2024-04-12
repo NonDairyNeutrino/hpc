@@ -57,7 +57,7 @@ program allocatable
     end if
 
     !> print matrix_power to the screen
-    call print_matrix(power_matrix)
+    !  call print_matrix(power_matrix)
 
     !> free memory used by matrices
     deallocate(power_matrix)
