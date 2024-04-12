@@ -1,4 +1,3 @@
-! use the ftllowing procedures to time calculations
 ! mclock
 ! - Returns the number of clock ticks since the start of the process, based on the function clock(3) in the C standard library. 
 ! - RESULT = MCLOCK()
@@ -18,36 +17,49 @@
 !    print '("Time = ",f6.3," seconds.")',finish-start
 !   end program test_cpu_time
 !
-! system_clock
-!
-! date_and_time
-!
 ! etime
 
 !> @file bench.f90
 !! @brief Benchmark matrix multiplication implementations
 program bench
     implicit none
+
+    !> timing variables
     integer        :: start_mclock, end_mclock
     integer        :: start_time8,  end_time8
     real           :: start_cpu,    end_cpu
     real           :: etime_array(2), etime_total
 
-    character(255) :: cmd
-    character(255) :: prog
+    !> command line parsing
+    character(128) :: cmd
+    character(128) :: prog
+    character(32)  :: args(2) ! should always be "bin dimension power id_id"
+    integer        :: stat, matrix_dimension, power ! argument parsing
+
+    !> file IO
+    integer        :: io
+    character(20)  :: file_path
+    logical        :: exists
+
+    !> loop iterators
     integer        :: i
+    integer        :: arg_i
 
     !> parse command line
     call get_command(cmd)
     prog = cmd(15:) ! 14 is the number of characters in './bench/bench '
+    do arg_i = 1, 2
+        call get_command_argument(arg_i + 1, args(arg_i))
+    end do
+    read(args, *, iostat=stat) matrix_dimension, power
     
     !> begin timing
     start_mclock = mclock()
     start_time8  = time8()
     call cpu_time(start_cpu)
 
-    ! call execute_command_line(prog, wait=.true.)
-    call sleep(5)
+    call execute_command_line(prog, wait=.true.)
+    ! call sleep(5)
 
     end_mclock = mclock()
     end_time8  = time8()
@@ -56,10 +68,31 @@ program bench
 
     print '(A, I4)',   "mclock time = ", end_mclock - start_mclock
     print '(A, I4)',   "time8  time = ", end_time8 - start_time8
-    print '(A, F7.3)', "mclock time = ", end_cpu - start_cpu
+    print '(A, F7.3)', "cpu_time time = ", end_cpu - start_cpu
     print '(A, F7.3, A, F7.3, A, F7.3)', &
     "etime user = ", etime_array(1), &
     " etime system = ", etime_array(2), &
     " etime total = ", etime_total
 
+    file_path = "bench/benchmarks.csv"
+    inquire(file = file_path, exist = exists) !> check if file exists
+
+    if (exists) then
+        ! write timings to file
+        open(newunit = io, file = file_path, position = "append", &
+            status = "old", action = "write")
+            write(io, '(I6, ",", I6, ",", I6)') matrix_dimension, power, end_time8 - start_time8 ! only save time8 timings
+        close(io)
+    else
+        ! create new file and write the header to the first line
+        open(newunit = io, file = file_path, status = "new", action = "write")
+        write(io, '("dimension,power,time(s)")')
+        close(io)
+
+        ! write timings to file
+        open(newunit = io, file = file_path, position = "append", &
+            status = "old", action = "write")
+            write(io, '(I6, ",", I6, ",", I6)') matrix_dimension, power, end_time8 - start_time8 ! only save time8 timings
+        close(io)
+    end if
 end program bench
