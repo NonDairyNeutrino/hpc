@@ -33,7 +33,7 @@ program bench
     !> command line parsing
     character(128) :: cmd
     character(128) :: prog
-    character(32)  :: args(2) ! should always be "bin dimension power id_id"
+    character(32)  :: args(4) ! should always be "bin dimension power id_id" or "python python_script dimension power"
     integer        :: stat, matrix_dimension, power ! argument parsing
 
     !> file IO
@@ -48,10 +48,16 @@ program bench
     !> parse command line
     call get_command(cmd)
     prog = cmd(15:) ! 14 is the number of characters in './bench/bench '
-    do arg_i = 1, 2
-        call get_command_argument(arg_i + 1, args(arg_i))
+    
+    do arg_i = 1, 4
+        call get_command_argument(arg_i, args(arg_i))
     end do
-    read(args, *, iostat=stat) matrix_dimension, power
+
+    if (args(1) == "python") then
+        read(args(3:4), *, iostat=stat) matrix_dimension, power
+    else
+        read(args(2:3), *, iostat=stat) matrix_dimension, power
+    end if
     
     !> begin timing
     start_mclock = mclock()

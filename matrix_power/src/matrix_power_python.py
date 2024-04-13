@@ -36,4 +36,5 @@ matrix_dimension        = int(matrix_dimension)
 power                   = int(power)
 
 matrix = [[random() for col in range(matrix_dimension)] for row in range(matrix_dimension)]
-print(matrix_power(power, matrix))
+result = matrix_power(power, matrix)
+# print(result)

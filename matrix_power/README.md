@@ -34,3 +34,20 @@ In order to build this project from source, dependencies are needed.
 
 ### FORTRAN COMPILER
 The FORTRAN compiler used to create this project is the "GNU Fortran Project"'s `GFortran` version 13.2.1.  While `GFortran` was used, `gcc` should also work.
+
+## Project Organization
+
+## Source Code
+Source code for matrix multiplication functionality in Fortran and Python can be found in src/.
+
+### Binaries/Executables
+Once compiled, binaries can be found in bin/.
+
+### Documentation
+Documentation (generated via Doxygen) for the functionality of this project can be found in both html and man-page formats in docs/.
+
+### Benchmarking
+Benchmarking utilities and results can be found in bench/.
+
+### Report
+The report and analysis for this project can be found in report/nathan_chapman_lab1.pdf.
