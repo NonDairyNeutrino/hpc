@@ -1,0 +1,195 @@
+\documentclass{report}
+% geometry formatting
+\usepackage{authblk}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.625in]{geometry}
+\usepackage{parskip, setspace}
+\setstretch{1.15}
+% math formatting
+\usepackage{amsmath, amsfonts}
+% \numberwithin{equation}{section}
+% rich text
+\usepackage{graphicx, caption, wrapfig}
+\usepackage{hyperref}
+% bibliography
+\usepackage{biblatex}
+\addbibresource{bib.bib}
+
+\renewcommand{\arraystretch}{1.5} % give a little more space in table
+
+\title{CS 530: High-Performance Computing \\ Seminar 1: Computational Physics}
+\author{Nathan Chapman}
+\affil{Department of Computer Science, Central Washington University}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction}
+
+    % \begin{itemize}
+    %     \item There are really hard and complex problems that are reasonably solved by hand
+    %     \item There are problems with no analytic solution
+    %     \item There are really big problems that require high-performance computing
+    %     \item Computational physics lies at the intersection of Math, Physics, and Computer Science
+    %     \item The difference between ``doing physics on the computer'' and ``computational physics'' is the consideration of numerical analysis
+    % \end{itemize}
+
+\chapter{Mathematical Methods}
+
+    \section{Taylor Series}
+
+    \section{Fourier Analysis}
+
+        \subsection{Fourier Series}
+
+        \subsection{The Fourier Transform}
+
+    \section{Properties of Differential Equations}
+
+        \subsection{Order}
+
+        \subsection{Linearity}
+
+        \subsection{Homogeneity}
+
+        \subsection{Chaos \& Entropy}
+
+            \subsubsection{Poincar{\'e} Sections}
+
+    \section{Ordinary Differential Equations}
+
+    \section{Partial Differential Equations}
+
+        \subsection{Parabolic PDEs}
+
+            \subsubsection{The Heat Equation}
+
+        \subsection{Hyperbolic PDEs}
+
+            \subsubsection{The Wave Equation}
+
+        \subsection{Sturm-Liouville Theory}
+
+        \subsection{Green's Functions}
+
+    \section{Differential Equations with Conditions}
+
+        \subsection{Initial Conditions}
+
+        \subsection{Boundary Conditions}
+
+            % \begin{itemize}
+            %     \item Dirichlet
+            %     \item Neumann
+            %     \item Robin
+            %     \item Mixed
+            %     \item Cauchy
+            % \end{itemize}
+
+    \section{Systems of Differential Equations}
+
+        \subsection{Coupled Systems}
+
+    \section{Eigenvalue Problems}
+
+    \section{Optimization}
+
+\chapter{Computational Methods}
+
+    \section{Programming Language}
+
+        \subsection{Fortran}
+
+        \subsection{Julia}
+
+        \subsection{Python}
+
+        \subsection{Matlab \& Mathematica}
+
+    \section{Finite-Differences}
+
+        \subsection{Order}
+
+        \subsection{Accuracy}
+
+    \section{Runge-Kutta Methods}
+
+    \section{Symplectic Integrators}
+
+    \section{Parareal - Parallel-in-Time Integration}
+
+    \section{The Fast Fourier Transform}
+
+        \subsection{FFTW}
+
+            \subsubsection{CUDA FFTW}
+
+    \section{Finite-Element Methods}
+
+    \section{Markov Chains \& Monte-Carlo Methods}
+
+\chapter{Physical Context}
+
+    \section{Orbital Dynamics}
+
+        \subsection{The N-Body Problem}
+
+    \section{Fluid Dynamics}
+
+        \subsection{The Lattice Boltzmann Method}
+
+    \section{Electrodynamics \& Magnetohydrodynamics}
+
+        \subsection{Fringing Electric Fields of Non-Ideal Capacitors}
+
+    \section{Many-Body Quantum Mechanics}
+
+        \subsection{Quadrupole-Quadrupole Interactions in a BEC}
+
+    \section{Numerical Relativity}
+
+        \subsection{Mercury's Perihelion Shift}
+
+            \subsubsection{Effects of Eccentricity}
+
+            \subsubsection{Gravitational Wave Chirp}
+
+        \subsection{Gravitational Waves}
+
+    \section{Chaotic Systems}
+
+        \subsection{Atmospheric Physics}
+
+        \subsection{Forced Oscillators}
+
+    \section{Honorable Mentions}
+
+        \subsection{Projectile Motion with Drag}
+
+\chapter{Numerical Analysis}
+    
+    \section{Error}
+
+    \section{Lax Equivalence Theorem}
+
+    \section{Courant-Friedrichs-Lewy condition}
+
+    \section{Von Neumann Stability}
+
+    \section{Energy Drift}
+
+    \section{Stiff Differential Equations}
+
+    \section{Grids \& Meshes}
+
+    \section{Numerical Diffusion}
+
+\newpage
+
+\printbibliography
+
+\end{document}
