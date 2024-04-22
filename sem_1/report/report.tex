@@ -1,4 +1,5 @@
 \documentclass{report}
+\renewcommand{\thesection}{\arabic{section}}
 % geometry formatting
 \usepackage{authblk}
 \usepackage[utf8]{inputenc}
@@ -17,7 +18,7 @@
 
 \renewcommand{\arraystretch}{1.5} % give a little more space in table
 
-\title{CS 530: High-Performance Computing \\ Seminar 1: Computational Physics}
+\title{CS 530: High-Performance Computing \\ Seminar 1: A Survey of Computational Physics}
 \author{Nathan Chapman}
 \affil{Department of Computer Science, Central Washington University}
 \date{\today}
@@ -27,166 +28,431 @@
 \maketitle
 
 \tableofcontents
+\pagebreak
 
-\chapter{Introduction}
+% \chapter{Introduction}
 
-    % \begin{itemize}
-    %     \item There are really hard and complex problems that are reasonably solved by hand
-    %     \item There are problems with no analytic solution
-    %     \item There are really big problems that require high-performance computing
-    %     \item Computational physics lies at the intersection of Math, Physics, and Computer Science
-    %     \item The difference between ``doing physics on the computer'' and ``computational physics'' is the consideration of numerical analysis
-    % \end{itemize}
+%     % \begin{itemize}
+%     %     \item There are really hard and complex problems that are reasonably solved by hand
+%     %     \item There are problems with no analytic solution
+%     %     \item There are really big problems that require high-performance computing
+%     %     \item Computational physics lies at the intersection of Math, Physics, and Computer Science
+%     %     \item The difference between ``doing physics on the computer'' and ``computational physics'' is the consideration of numerical analysis
+%     % \end{itemize}
 
-\chapter{Mathematical Methods}
+% \chapter{Mathematical Methods}
 
-    \section{Taylor Series}
+%     \section{Taylor Series}
 
-    \section{Fourier Analysis}
+%     \section{Fourier Analysis}
 
-        \subsection{Fourier Series}
+%         \subsection{Fourier Series}
 
-        \subsection{The Fourier Transform}
+%         \subsection{The Fourier Transform}
 
-    \section{Properties of Differential Equations}
+%     \section{Properties of Differential Equations}
 
-        \subsection{Order}
+%         \subsection{Order}
 
-        \subsection{Linearity}
+%         \subsection{Linearity}
 
-        \subsection{Homogeneity}
+%         \subsection{Homogeneity}
 
-        \subsection{Chaos \& Entropy}
+%         \subsection{Chaos \& Entropy}
 
-            \subsubsection{Poincar{\'e} Sections}
+%             \subsubsection{Poincar{\'e} Sections}
 
-    \section{Ordinary Differential Equations}
+%     \section{Ordinary Differential Equations}
 
-    \section{Partial Differential Equations}
+%     \section{Partial Differential Equations}
 
-        \subsection{Parabolic PDEs}
+%         \subsection{Parabolic PDEs}
 
-            \subsubsection{The Heat Equation}
+%             \subsubsection{The Heat Equation}
 
-        \subsection{Hyperbolic PDEs}
+%         \subsection{Hyperbolic PDEs}
 
-            \subsubsection{The Wave Equation}
+%             \subsubsection{The Wave Equation}
 
-        \subsection{Sturm-Liouville Theory}
+%         \subsection{Sturm-Liouville Theory}
 
-        \subsection{Green's Functions}
+%         \subsection{Green's Functions}
 
-    \section{Differential Equations with Conditions}
+%     \section{Differential Equations with Conditions}
 
-        \subsection{Initial Conditions}
+%         \subsection{Initial Conditions}
 
-        \subsection{Boundary Conditions}
+%         \subsection{Boundary Conditions}
 
-            % \begin{itemize}
-            %     \item Dirichlet
-            %     \item Neumann
-            %     \item Robin
-            %     \item Mixed
-            %     \item Cauchy
-            % \end{itemize}
+%             % \begin{itemize}
+%             %     \item Dirichlet
+%             %     \item Neumann
+%             %     \item Robin
+%             %     \item Mixed
+%             %     \item Cauchy
+%             % \end{itemize}
 
-    \section{Systems of Differential Equations}
+%     \section{Systems of Differential Equations}
 
-        \subsection{Coupled Systems}
+%         \subsection{Coupled Systems}
 
-    \section{Eigenvalue Problems}
+%     \section{Eigenvalue Problems}
 
-    \section{Optimization}
+%     \section{Optimization}
 
-\chapter{Computational Methods}
+% \chapter{Computational Methods}
 
-    \section{Programming Language}
+%     \section{Programming Language}
 
-        \subsection{Fortran}
+%         \subsection{Fortran}
 
-        \subsection{Julia}
+%         \subsection{Julia}
 
-        \subsection{Python}
+%         \subsection{Python}
 
-        \subsection{Matlab \& Mathematica}
+%         \subsection{Matlab \& Mathematica}
 
-    \section{Finite-Differences}
+%     \section{Finite-Differences}
 
-        \subsection{Order}
+%         \subsection{Order}
 
-        \subsection{Accuracy}
+%         \subsection{Accuracy}
 
-    \section{Runge-Kutta Methods}
+%     \section{Runge-Kutta Methods}
 
-    \section{Symplectic Integrators}
+%     \section{Symplectic Integrators}
 
-    \section{Parareal - Parallel-in-Time Integration}
+%     \section{Parareal - Parallel-in-Time Integration}
 
-    \section{The Fast Fourier Transform}
+%     \section{The Fast Fourier Transform}
 
-        \subsection{FFTW}
+%         \subsection{FFTW}
 
-            \subsubsection{CUDA FFTW}
+%             \subsubsection{CUDA FFTW}
 
-    \section{Finite-Element Methods}
+%     \section{Finite-Element Methods}
 
-    \section{Markov Chains \& Monte-Carlo Methods}
+%     \section{Markov Chains \& Monte-Carlo Methods}
 
-\chapter{Physical Context}
+% \chapter{Physical Context}
 
-    \section{Orbital Dynamics}
+%     \section{Orbital Dynamics}
 
-        \subsection{The N-Body Problem}
+%         \subsection{The N-Body Problem}
 
-    \section{Fluid Dynamics}
+%     \section{Fluid Dynamics}
 
-        \subsection{The Lattice Boltzmann Method}
+%         \subsection{The Lattice Boltzmann Method}
 
-    \section{Electrodynamics \& Magnetohydrodynamics}
+%     \section{Electrodynamics \& Magnetohydrodynamics}
 
-        \subsection{Fringing Electric Fields of Non-Ideal Capacitors}
+%         \subsection{Fringing Electric Fields of Non-Ideal Capacitors}
 
-    \section{Many-Body Quantum Mechanics}
+%     \section{Many-Body Quantum Mechanics}
 
-        \subsection{Quadrupole-Quadrupole Interactions in a BEC}
+%         \subsection{Quadrupole-Quadrupole Interactions in a BEC}
 
-    \section{Numerical Relativity}
+%     \section{Numerical Relativity}
 
-        \subsection{Mercury's Perihelion Shift}
+%         \subsection{Mercury's Perihelion Shift}
 
-            \subsubsection{Effects of Eccentricity}
+%             \subsubsection{Effects of Eccentricity}
 
-            \subsubsection{Gravitational Wave Chirp}
+%             \subsubsection{Gravitational Wave Chirp}
 
-        \subsection{Gravitational Waves}
+%         \subsection{Gravitational Waves}
 
-    \section{Chaotic Systems}
+%     \section{Chaotic Systems}
 
-        \subsection{Atmospheric Physics}
+%         \subsection{Atmospheric Physics}
 
-        \subsection{Forced Oscillators}
+%         \subsection{Forced Oscillators}
 
-    \section{Honorable Mentions}
+%     \section{Honorable Mentions}
 
-        \subsection{Projectile Motion with Drag}
+%         \subsection{Projectile Motion with Drag}
 
-\chapter{Numerical Analysis}
+% \chapter{Numerical Analysis}
     
-    \section{Error}
+%     \section{Error}
 
-    \section{Lax Equivalence Theorem}
+%     \section{Lax Equivalence Theorem}
 
-    \section{Courant-Friedrichs-Lewy condition}
+%     \section{Courant-Friedrichs-Lewy condition}
 
-    \section{Von Neumann Stability}
+%     \section{Von Neumann Stability}
 
-    \section{Energy Drift}
+%     \section{Energy Drift}
 
-    \section{Stiff Differential Equations}
+%     \section{Stiff Differential Equations}
 
-    \section{Grids \& Meshes}
+%     \section{Grids \& Meshes}
 
-    \section{Numerical Diffusion}
+%     \section{Numerical Diffusion}
+
+\section{Introduction}
+
+    Each of the five pillars of physics (Classical Mechanics, Electromagnetism, Relativity, Quantum Mechanicsm, and Thermodynamics) has well-posed problems for which the mathematical models are either unreasonable or impossible to solve by hand.  As such, computational methods are needed to get an approximate solution.  
+    
+    There are many numerical methods to support the evolution of physical models for each domain.  Whether it be using a fourth-order Runge-Kutta method to solve the first-order ordinary differential equation that models a ballistic object under the influence of gravity and air-resistance, or using an eigth-order symplectic Yoshida integrator to model a system of bodies orbiting each other while accounting for the produced gravitational waves, there are methods for every physical context.  Though, because these methods are using approximations to their analytic counterparts in calculus, there is error that needs to be considered.
+
+    Numerical analysis is the practice of tracking and rigorously accounting for the discrepancies that arise when approximating analytic mathematical methods by their finite and counterparts.  These errors can arise not only from approximating descriptions from calculus, but also from operations in linear algebra as they're applied to finding the eigenvalues of quantum operators.
+
+\section{Classical Mechanics} \label{sec:classical}
+
+    The ``everyday'' world as we know it is described by a model of physics that has been studied for millenia.  As such, we call this model of the behavior of nature ``Classical Mechanics''.  Now I hear you ask ``Why?''.  Well ``mechanics'' is the study of motion, and we include the ``classical'' preface to distinguish it from ``modern'' physics which encompasses all the physics discovered after around 1905 or 1925 (depending on who you ask); those physics will be covered later in sections \ref{sec:quantum} and \ref{sec:relativity}.  For now we take a look at the mathematical model that describes the motion of not-too-small, not-too-large objects moving at slow velocities.
+    
+    The motion of ``classical'' objects, ranging in scale from biological cells, sand, ants, birds, cars, airplanes, planets, up to stars, can described as the solution to what's called the \emph{equation of motion}.  The equation of motion for an object with mass $m$ under the influence of forces $F_i$ is determined by Newton's 2nd law of motion
+    
+    \begin{equation} \label{eq:newton}
+        \sum_i \vec{F}_i = m \ddot{\vec{x}},
+    \end{equation}
+
+    where $\ddot{\vec{x}}$ represents the second time derivative of the position $\vec{x}$ known as \emph{acceleration}.  These forces completely determine the how objects move through space in time.
+    
+    Mathematically, the resulting equation is a second-order ordinary differential equation.  In many cases, this differential equation is homogenous to represent no time-dependent external forces supplying the physical system with energy.  Likewise, sometimes these forces can be represented by nonlinear terms; making the equation of motion much more complex.
+    
+    The following is a survey of topics in classical mechanics whose forces yield an equation of motion either too complex or too unreasonable to solve by hand.
+
+    \subsection{N-Body Orbits} \label{subsec:orbits}
+
+        While so-called N-Body problems are prolific in physics and other sciences, a quintessential example is the gravitational interaction of astrophysical bodies i.e. massive bodies in space.
+
+        \subsubsection{Mathematical Model}
+
+            In the case of multi-body gravitaitonal interactions, the governing equation of motion is determined via Newton's law of gravitation between two objects with masses $m_i$ and $m_j$
+
+            \begin{equation}
+                F_{ij} = \frac{G m_i m_j}{r_{ij}^2} \hat{r} = \frac{G m_i m_j}{r_{ij}^2} \hat{r}
+            \end{equation}
+
+            where $G = 6.67 \times 10^{-11} \frac{N m^2}{kg^2}$ is the universal gravitaional constant, $r_{ij}$ is the distance between the two objects, and $\hat{r}$ is the unit vector pointing from object $i$ toward $j$.  Not only are is there an equation of motion for each object, but each equation is coupled to every other equation.  This results in the three-dimensional vector differential equation
+
+            \begin{equation}
+                \sum_{j; i \neq j} \frac{G m_i m_j}{(x_i - x_j)^2 + (y_i - y_j)^2 + (z_i - z_j)^2} \frac{(x_j - x_i) \hat{x} + (y_j - y_i) \hat{y} + (z_j - z_i) \hat{z}}{\sqrt{(x_i - x_j)^2 + (y_i - y_j)^2 + (z_i - z_j)^2}} = m_i (\ddot{x_i} \hat{x} + \ddot{y_i} \hat{y} + \ddot{z_i} \hat{z})
+            \end{equation}
+
+            for object $i$, and a similar equation for every other object.  For example, a system of 3 objects interacting only via gravitational forces has the equations of motion 
+
+            \begin{align}
+                \frac{G m_2}{((x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_2 - x_1 \\
+                    y_2 - y_1 \\
+                    z_2 - z_1
+                \end{bmatrix} + 
+                \frac{G m_3}{((x_1 - x_3)^2 + (y_1 - y_3)^2 + (z_1 - z_3)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_3 - x_1 \\
+                    y_3 - y_1 \\
+                    z_3 - z_1
+                \end{bmatrix} &= \begin{bmatrix}
+                    \ddot{x_1} \\
+                    \ddot{y_1} \\ 
+                    \ddot{z_1}
+                \end{bmatrix} \\
+                %
+                \frac{G m_1}{((x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_1 - x_2 \\
+                    y_1 - y_2 \\
+                    z_1 - z_2
+                \end{bmatrix} + 
+                \frac{G m_3}{((x_2 - x_3)^2 + (y_2 - y_3)^2 + (z_2 - z_3)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_3 - x_2 \\
+                    y_3 - y_2 \\
+                    z_3 - z_2
+                \end{bmatrix} &= \begin{bmatrix}
+                    \ddot{x_2} \\
+                    \ddot{y_2} \\ 
+                    \ddot{z_2}
+                \end{bmatrix} \\
+                %
+                \frac{G m_1}{((x_3 - x_1)^2 + (y_3 - y_1)^2 + (z_3 - z_1)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_1 - x_3 \\
+                    y_1 - y_3 \\
+                    z_1 - z_3
+                \end{bmatrix} + 
+                \frac{G m_2}{((x_3 - x_2)^2 + (y_3 - y_2)^2 + (z_3 - z_2)^2)^{3/2}} 
+                \begin{bmatrix}
+                    x_2 - x_3 \\
+                    y_2 - y_3 \\
+                    z_2 - z_3
+                \end{bmatrix} &= \begin{bmatrix}
+                    \ddot{x_3} \\
+                    \ddot{y_3} \\ 
+                    \ddot{z_3}
+                \end{bmatrix}
+            \end{align}
+
+            Because this problem is in three dimensions, there are actually 9 differential equations to solve in order to fully model the evolution of the position and velocity over time of each object.
+
+        \subsubsection{Computational Tools}
+
+            Because computers can only store numbers of finite precision, approximations must be used in order to implement these differntial equations in a form that can be understood by the computer.  One such translation is by approximating the analytic derivatives and differential operators with \emph{finite differences}. [MORE ON FINITE DIFFERENCES]
+
+            Newton's 2nd law combined with the the evolution equations
+            
+            \begin{subequations}
+                \begin{equation}
+                    \dot{\vec{x}}_{i + 1} = \dot{\vec{x}}_i + \ddot{\vec{x}}_i \Delta t
+                \end{equation}
+                \begin{equation}
+                    \vec{x}_{i + 1} = \vec{x}_i + \dot{\vec{x}}_i \Delta t
+                \end{equation}
+            \end{subequations}
+
+            There are many forms and implementations of finite differences, some more suitable for a particular context compared to another (more on this later).  For the problem of orbital dynamics, there is a class of finite difference methods called \emph{symplectic integrators}; so-called because they do not change the geometry of the phase-space. [MORE 0N SYMPLECTIC INTEGRATORS]
+
+            Because there are so many terms and equations, and each term is only needs the current step, this problem naturally lends itself to being parallelized.
+
+        \subsubsection{Numerical Analysis}
+
+            \begin{itemize}
+                \item time step
+                \item energy drift
+            \end{itemize}
+
+    \subsection{Fluid Dynamics}
+
+        \subsubsection{Mathematical Model}
+
+            \begin{itemize}
+                \item Navier-Stokes
+            \end{itemize}
+
+        \subsubsection{Computational Tools}
+
+            \begin{itemize}
+                \item ?
+            \end{itemize}
+
+        \subsubsection{Numerical Analysis}
+
+            \begin{itemize}
+                \item ?
+            \end{itemize}
+
+    \subsection{Projectile Motion with Drag}
+
+        \subsubsection{Mathematical Model}
+
+            \begin{itemize}
+                \item linear drag
+                \item quadratic Drag
+                \item both -> system of nonlinear differential equations
+            \end{itemize}
+
+        \subsubsection{Computational Tools}
+
+        \subsubsection{Numerical Analysis}
+
+\section{Electromagnetism}
+
+    \subsection{Fringing Electric Fields of Non-Ideal Capacitors}
+
+        \subsubsection{Mathematical Model}
+
+            \begin{itemize}
+                \item maxwell's equations
+            \end{itemize}
+
+        \subsubsection{Computational Tools}
+
+            \begin{itemize}
+                \item relaxation method
+            \end{itemize}
+
+        \subsubsection{Numerical Analysis}
+
+            \begin{itemize}
+                \item spatial mesh
+            \end{itemize}
+
+    \subsection{Relativistic Magnetohydrodynamics}
+
+        \subsubsection{Mathematical Model}
+
+            \begin{itemize}
+                \item maxwell's equations
+                \item Navier-Stokes
+            \end{itemize}
+
+        \subsubsection{Computational Tools}
+
+            \begin{itemize}
+                \item 
+            \end{itemize}
+
+        \subsubsection{Numerical Analysis}
+
+            \begin{itemize}
+                \item 
+            \end{itemize}
+
+\section{Quantum Mechanics} \label{sec:quantum}
+
+    \subsection{Arbitrary Potential Wells}
+
+    \subsection{Quantum Chemistry}
+
+    \subsection{Quadrupole-Quadrupole Interactions in a BEC}
+
+
+
+
+
+
+
+
+
+    \subsection{Mathematical Model}
+
+        \begin{itemize}
+            \item The Schr{\"o}dinger Equation
+            \item The Many-Body Schr{\"o}dinger Equation
+        \end{itemize}
+
+    \subsection{Computational Tools}
+
+    \subsection{Numerical Analysis}
+
+\section{Relativity} \label{sec:relativity}
+
+    \subsection{Mercury's Perihelion Shift}
+
+    \subsection{Effects of Eccentricity}
+
+    \subsection{Gravitational Wave Chirp}
+
+    \subsection{Gravitational Waves}
+
+
+
+
+
+
+    \subsection{Mathematical Model}
+
+    \subsection{Computational Tools}
+
+    \subsection{Numerical Analysis}
+
+\section{Chaotic Systems}
+
+    \subsection{Atmospheric Physics}
+
+    \subsection{Forced Oscillators}
+
+    \subsection{Mathematical Model}
+
+    \subsection{Computational Tools}
+
+    \subsection{Numerical Analysis}
+
+\section{Conclusion}
 
 \newpage
 
