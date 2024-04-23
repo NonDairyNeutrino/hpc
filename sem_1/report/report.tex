@@ -1,6 +1,12 @@
 \documentclass{report}
 % \renewcommand{\thesection}{\arabic{section}}
 \setcounter{tocdepth}{1}
+% index
+\usepackage{imakeidx}
+\makeindex%[title=Index, intoc]
+% glossary
+% \usepackage{glossaries}
+% \makeglossaries
 % geometry formatting
 \usepackage{authblk}
 \usepackage[utf8]{inputenc}
@@ -50,7 +56,7 @@
 
 \title{CS 530: High-Performance Computing \\ Seminar 1: A Survey of Computational Physics}
 \author{Nathan Chapman}
-\affil{Department of Computer Science, Central Washington University}
+\affil{Department of Computer Science \\ Central Washington University}
 \date{\today}
 
 \begin{document}
@@ -58,7 +64,8 @@
 \maketitle
 
 \tableofcontents
-\pagebreak
+
+\listoffigures
 
 % \chapter{Introduction}
 
@@ -222,25 +229,25 @@
 
 \chapter{Introduction}
 
-    Each of the five pillars of physics (Classical Mechanicsm, Electromagnetism, Relativity, Quantum Mechanics, and Thermodynamics) has well-posed problems for which the mathematical models are either unreasonable or impossible to solve by hand.  As such, computational methods are needed to get an approximate solution.  
+    Each of the five pillars of physics (Classical Mechanics\index{Mechanics}\index{Mechanics!Classical}, Electromagnetism\index{Electromagnetism}, Relativity\index{Relativity}, Quantum Mechanics\index{Mechanics!Quantum}, and Thermodynamics\index{Thermodynamics}) has well-posed problems for which the mathematical models are either unreasonable or impossible to solve by hand.  As such, computational methods are needed to get an approximate solution.  
     
-    There are many numerical methods to support the evolution of physical models for each domain.  Whether it be using a fourth-order Runge-Kutta method to solve the first-order ordinary differential equation that models a ballistic object under the influence of gravity and air-resistance, or using an eigth-order symplectic Yoshida integrator to model a system of bodies orbiting each other while accounting for the produced gravitational waves, there are methods for every physical context.  Though, because these methods are using approximations to their analytic counterparts in calculus, there is error that needs to be considered.
+    There are many numerical methods to support the evolution of physical models for each domain.  Whether it be using a fourth-order Runge-Kutta\index{Runge-Kutta} method to solve the first-order ordinary differential equation \index{Differential Equation!Ordinary} that models a ballistic object under the influence of gravity and air-resistance, or using an eigth-order symplectic\index{Symplectic} Yoshida integrator\index{Integrator!Symplectic} to model a system of bodies orbiting each other while accounting for the produced gravitational waves, there are methods for every physical context.  Though, because these methods are using approximations to their analytic counterparts in calculus, there is error that needs to be considered.
 
-    Numerical analysis is the practice of tracking and rigorously accounting for the discrepancies that arise when approximating analytic mathematical methods by their finite and counterparts.  These errors can arise not only from approximating descriptions from calculus, but also from operations in linear algebra as they're applied to finding the eigenvalues of quantum operators.
+    Numerical analysis\index{Numerical Analysis} is the practice of tracking and rigorously accounting for the discrepancies that arise when approximating analytic mathematical methods by their finite and counterparts.  These errors can arise not only from approximating descriptions from calculus, but also from operations in linear algebra as they're applied to finding the eigenvalues of quantum operators.
 
 \chapter{Classical Mechanics} \label{sec:classical}
 
-    The ``everyday'' world as we know it is described by a model of physics that has been studied for millenia.  As such, we call this model of the behavior of nature ``Classical Mechanics''.  Now I hear you ask ``Why?''.  Well ``mechanics'' is the study of motion, and we include the ``classical'' preface to distinguish it from ``modern'' physics which encompasses all the physics discovered after around 1905 or 1925 (depending on who you ask); those physics will be covered later in sections \ref{sec:quantum} and \ref{sec:relativity}.  For now we take a look at the mathematical model that describes the motion of not-too-small, not-too-large objects moving at slow velocities.
+    The ``everyday'' world as we know it is described by a model of physics that has been studied for millenia.  As such, we call this model of the behavior of nature ``Classical Mechanics''\index{Mechanics!Classical}.  Now I hear you ask ``Why?''.  Well ``mechanics''\index{Mechanics} is the study of motion, and we include the ``classical'' preface to distinguish it from ``modern'' physics which encompasses all the physics discovered after around 1905 or 1925 (depending on who you ask); those physics will be covered later in sections \ref{sec:quantum} and \ref{sec:relativity}.  For now we take a look at the mathematical model that describes the motion of not-too-small, not-too-large objects moving at slow velocities.
     
-    The motion of ``classical'' objects, ranging in scale from biological cells, sand, ants, birds, cars, airplanes, planets, up to stars, can described as the solution to what's called the \emph{equation of motion}.  The equation of motion for an object with mass $m$ under the influence of forces $F_i$ is determined by Newton's 2nd law of motion
+    The motion of ``classical'' objects, ranging in scale from biological cells, sand, ants, birds, cars, airplanes, planets, up to stars, can described as the solution to what's called the \emph{equation of motion}\index{Equation of Motion}.  The equation of motion for an object with mass $m$ under the influence of forces $F_i$ is determined by Newton's 2nd law of motion\index{Newton!2nd Law}
     
     \begin{equation} \label{eq:newton}
         \sum_i \vec{F}_i = m \ddot{\vec{x}},
     \end{equation}
 
-    where $\ddot{\vec{x}}$ represents the second time derivative of the position $\vec{x}$ known as \emph{acceleration}.  These forces completely determine the how objects move through space in time.
+    where $\ddot{\vec{x}}$ represents the second time derivative\index{Derivative} of the position\index{Position} $\vec{x}$ known as \emph{acceleration}\index{Acceleration}.  These forces completely determine the how objects move through space in time.
     
-    Mathematically, the resulting equation is a second-order ordinary differential equation.  In many cases, this differential equation is homogenous to represent no time-dependent external forces supplying the physical system with energy.  Likewise, sometimes these forces can be represented by nonlinear terms; making the equation of motion much more complex.
+    Mathematically, the resulting equation is a vector second-order ordinary differential equation\index{Differential Equation!Second Order}, compactly representing the underlying system of differential equations\index{Differential Equation!System}.  In many cases, this differential equation is homogenous\index{Differential Equation!Homogenous} to represent no time-dependent external forces supplying the physical system with energy\index{Energy}.  Likewise, sometimes these forces can be represented by nonlinear\index{Nonlinear} terms; making the equation of motion much more complex.
     
     The following is a survey of topics in classical mechanics whose forces yield an equation of motion either too complex or too unreasonable to solve by hand.
 
@@ -248,17 +255,17 @@
 
     \section{N-Body Orbits} \label{subsec:orbits}
 
-        While so-called N-Body problems are prolific in physics and other sciences, a quintessential example is the gravitational interaction of astrophysical bodies i.e. massive bodies in space.
+        While so-called N-Body\index{N-Body} problems are prolific in physics and other sciences, a quintessential example is the gravitational\index{Gravity} interaction of astrophysical bodies i.e. massive bodies in space.
 
         \subsection{Mathematical Model: Systems of Ordinary Differential Equations}
 
-            In the case of multi-body gravitaitonal interactions, the governing equation of motion is determined via Newton's law of gravitation between two objects with masses $m_i$ and $m_j$
+            In the case of multi-body gravitaitonal interactions, the governing equation of motion\index{Equation of Motion} is determined via Newton's law of gravitation\index{Newton!Gravitation} between two objects with masses $m_i$ and $m_j$
 
             \begin{equation}
                 F_{ij} = \frac{G m_i m_j}{r_{ij}^2} \hat{r}
             \end{equation}
 
-            where $G = 6.67 \times 10^{-11} \frac{N m^2}{kg^2}$ is the universal gravitaional constant, $r_{ij}$ is the distance between the two objects, and $\hat{r}$ is the unit vector pointing from object $i$ toward $j$.  Not only are is there an equation of motion for each object, but each equation is coupled to every other equation.  This results in the three-dimensional vector differential equation
+            where $G = 6.67 \times 10^{-11} \frac{N m^2}{kg^2}$ is the universal gravitaional constant, $r_{ij}$ is the distance between the two objects, and $\hat{r}$ is the unit vector pointing from object $i$ toward $j$.  Not only are is there an equation of motion for each object, but each equation is coupled to every other equation.  This results in the three-dimensional vector differential equation\index{Differential Equation}\cite{taylor2005classical}
 
             \begin{equation}
                 \sum_{j; i \neq j} \frac{G m_i m_j}{(x_i - x_j)^2 + (y_i - y_j)^2 + (z_i - z_j)^2} \frac{(x_j - x_i) \hat{x} + (y_j - y_i) \hat{y} + (z_j - z_i) \hat{z}}{\sqrt{(x_i - x_j)^2 + (y_i - y_j)^2 + (z_i - z_j)^2}} = m_i (\ddot{x_i} \hat{x} + \ddot{y_i} \hat{y} + \ddot{z_i} \hat{z})
@@ -319,21 +326,21 @@
                 \end{bmatrix}
             \end{align}
 
-            Because this problem is in three dimensions, there are actually 9 differential equations to solve in order to fully model the evolution of the position and velocity over time of each object.
+            Because this problem is in three dimensions, there are actually 9 differential equations to solve in order to fully model the evolution of the position\index{Position} and velocity\index{Velocity} over time of each object.
 
         \subsection{Computational Model}
         
             \subsubsection{Finite Differences}
 
-                Because computers can only store numbers of finite precision, approximations must be used in order to implement these differntial equations in a form that can be understood by the computer.  One such translation is by approximating the analytic derivatives and differential operators with \emph{finite differences}. In its most basic form, the derivative can be approximated as a ratio of differences in the form
+                Because computers can only store numbers of finite precision, approximations must be used in order to implement these differntial equations in a form that can be understood by the computer.  One such translation is by approximating the analytic derivatives and differential operators with \emph{finite differences}\index{Finite Differences}. In its most basic form, the derivative\index{Derivative} can be approximated as a ratio of differences in the form
 
                 \begin{equation}
                     \frac{df}{dt} \approx \frac{f(t + \Delta t) - f(t)}{\Delta t}.
                 \end{equation}
 
-                This equation is known as the first-order-accurate, forward-finite-difference representation of the first-order derivative \textbf{[NEEDS CITATION]}.  There are similar representations for higher-order derivatives, more accurate approximations, and more accurate approximations of higher-order derivatives. Similarly, there are also \emph{central} and \emph{backward} finite-differences.
+                This equation is known as the first-order-accurate\index{Finite Differences!First Order}, forward-finite-difference\index{Finite Differences!Forward} representation of the first-order derivative\index{Derivative!First Order} \textbf{[NEEDS CITATION]}.  There are similar representations for higher-order derivatives, more accurate approximations, and more accurate approximations of higher-order derivatives. Similarly, there are also \emph{central}\index{Finite Differences!Central} and \emph{backward}\index{Finite Differences!Backward} finite-differences.
 
-                Each of these finite-difference schemes can be represented via coefficients.  For example, the $m$-the derivative with accuracy $n$ has $2p + 1 = 2 \lfloor \frac{m + 1}{2} \rfloor - 1 + n$ central coefficients $a_{-p}, a_{-p + 1}, \ldots, a_{p - 1}, a_p$ defined such that
+                Each of these finite-difference schemes can be represented via coefficients\index{Finite Differences!Coefficients}.  For example, the derivative of order $m$\index{Derivative!Order} with accuracy $n$\index{Finite Differences!Accuracy} has $2p + 1 = 2 \lfloor \frac{m + 1}{2} \rfloor - 1 + n$ central\index{Finite Differences!Central} coefficients $a_{-p}, a_{-p + 1}, \ldots, a_{p - 1}, a_p$ defined such that
 
                 \begin{equation}
                     \begin{bmatrix}
@@ -361,11 +368,11 @@
 
                 where the only non-zero value on the right side of the equation is at the $m+1$-th index\textbf{[NEEDS CITATION]}.
                 
-                Once the derivative operators are discretized using finite-differences, there are different algorithms in which the differences are used to solve the differential equations.
+                Once the derivative\index{Derivative} operators are discretized\index{Discretize} using finite-differences\index{Finite Differences}, there are different algorithms in which the differences are used to solve the differential equations\index{Differential Equation}.
 
             \subsubsection{Symplectic Integrators}
 
-                While there are many methods of numerically solving differential equations (known as \emph{integrators}), one of the most important classes when considering a context such as orbital mechanics and oscillatory situations (i.e. Hamiltonian Systems) is that of \emph{symplectic} integrators.  This type of integrator is so important to computational physics because it conserves energy throughout time \textbf{[NEEDS CITATION]}.  Without energy conservation, the system becomes unphysical, which can lead to unnatural behavior such as a mass on a spring extending to infinity.  Two of the simplest symplectic integrators are the \emph{Semi-implicit Euler Method}\textbf{[NEEDS CITATION]}
+                While there are many methods of numerically solving differential equations\index{Differential Equation} (known as \emph{integrators}\index{Integrator}), one of the most important classes when considering a context such as orbital mechanics\index{Mechanics} and oscillatory\index{Oscillatory} situations (i.e. Hamiltonian\index{Hamiltonian} systems) is that of \emph{symplectic} integrators\index{Integrator!Symplectic}.  This type of integrator is so important to computational physics because it conserves energy\index{Energy!Conservation} throughout time\index{Time} \textbf{[NEEDS CITATION]}.  Without energy conservation\index{Energy!Conservation}, the system becomes unphysical, which can lead to unnatural behavior such as a mass\index{Mass} on a spring\index{Spring} extending to infinity.  Two of the simplest symplectic integrators\index{Integrator!Symplectic} are the \emph{Semi-implicit Euler Method}\index{Euler}\index{Implicit}\textbf{[NEEDS CITATION]}
 
                 \begin{subequations} \label{eq:semiEuler}
                     \begin{equation}
@@ -376,7 +383,7 @@
                     \end{equation}
                 \end{subequations}
 
-                and the \emph{Velocity Verlet Algorithm}\textbf{[NEEDS CITATION]}
+                and the \emph{Velocity Verlet Algorithm}\index{Velocity}\index{Verlet}\textbf{[NEEDS CITATION]}
 
                 \begin{subequations} \label{eq:verlet}
                     \begin{equation}
@@ -387,38 +394,29 @@
                     \end{equation}
                 \end{subequations}
 
-                The velocity-Verlet algorithm in C:
+                The velocity-Verlet algorithm in C[NEEDS CITATION TO ALGORITHM ARCHIVE]:
 
-                \begin{lstlisting}[language=C]
-void velocity_verlet(double *time, double *vel,
-                     double pos, double acc, double dt) {
-    *vel = 0.0;
-    *time = 0.0;
-
-    while (pos > 0) {
-        *time += dt;
-        pos += (*vel) * dt + 0.5 * acc * dt * dt;
-        *vel += acc * dt;
-    }
-}               \end{lstlisting}
+                
 
             \subsubsection{Parallel Computing}
 
-                Because there are so many terms and equations, and each term is only needs the current step, this problem naturally lends itself to being parallelized\cite{parallelnbody}.
+                Because there are so many terms and equations, and each term is only needs the current step, this problem naturally lends itself to being parallelized\cite{parallelnbody}\index{Parallel}.
 
         \subsection{Numerical Analysis}
 
             \subsubsection{Discretization}
 
-                Error associated with the size of the time-step is dictated by which specific finite-difference method is chosen.
+                Error\index{Error} associated with the size of the time-step\index{Step!Time} is dictated by which specific finite-difference\index{Finite Differences} method is chosen.
 
             \subsubsection{Energy Drift}
 
-                In the case of orbital mechanics, there is no loss of mechanical energy (ignoring the effects of general relativity; more on this later in section \ref{sec:relativity}).  Therefore, a constraint is imposed on the system that the total mechanical energy (kinetic energy + potential energy) of the system must remain constant at each point in time.  When using non-symplectic methods, this constraint is not adhered to which leads to \emph{energy drift}.
+                In the case of orbital mechanics\index{Mechanics}, there is no loss of mechanical energy\index{Energy} (ignoring the effects of general relativity; more on this later in section \ref{sec:relativity}).  Therefore, a constraint is imposed on the system that the total mechanical energy\index{Energy} (kinetic energy + potential energy) of the system must remain constant at each point in time\index{Time}.  When using non-symplectic\index{Integrator!Symplectic} methods, this constraint is not adhered to which leads to \emph{energy drift}\index{Energy!Drift}.
 
 \pagebreak
 
     \section{Fluid Dynamics}
+
+        Fluid dynamics is 
 
         \subsection{Mathematical Model}
 
@@ -428,25 +426,36 @@ void velocity_verlet(double *time, double *vel,
 
         \subsection{Computational Tools}
 
-            \begin{itemize}
-                \item ?
-            \end{itemize}
+            lattice boltzmann method in parallel and on GPU
 
         \subsection{Numerical Analysis}
 
-            \begin{itemize}
-                \item ?
-            \end{itemize}
+            NS is a PDE so CFL
+
+\pagebreak
 
     \section{Projectile Motion with Drag}
 
+        Projectile motion is a fundamental concept in introductory physics as it allows students to learn how to work with problems involving forces and motion in multiple dimensions.  These considerations always neglect air-resistance, also known as \emph{drag}\index{Drag}.  This simplification is done to not only highlight the fundamentals of motion, but also because including even low-order drag terms greatly increases the complexity of the equation of motion.
+
         \subsection{Mathematical Model}
 
-            \begin{itemize}
-                \item linear drag
-                \item quadratic Drag
-                \item both -> system of nonlinear differential equations
-            \end{itemize}
+            Beginning again from Newton's second law\index{Newton!2nd Law} as described with equation (\ref{eq:newton}), we can fully determine the motion of an object under the influence of gravity and both linear and quadratic drag as\cite{taylor2005classical}
+
+            \begin{equation}
+                m \vec{g} - b \left|\left| \dot{\vec{r}} \right|\right| \hat{\dot{r}} - c \left|\left|\dot{\vec{r}}\right|\right|^2 \hat{r} = m \ddot{\vec{r}}
+            \end{equation}
+
+            where $b,c$ are physical constants $\vec{g}$ is the acceleration of gravity near the surface of Earth (i.e. where the air is).  Because this equation cannot be represented as the application of a differential operator on a function or vector of functions, this equation of motion is a \emph{nonlinear} differential equation\index{Differential Equation!Nonlinear}.  In fact, because this is again a vector equation, there are actually three nonlinear differential equations that, due to the magnitude of the velocity, all rely on each other; thus this differential equation is said to be a \emph{coupled system}\index{Differential Equation!Coupled} of differential equations.  Expanded out, the equation of motion becomes
+
+            \begin{subequations}
+                \begin{equation}
+                    - b \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \hat{\dot{r}} - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_x = m \ddot{r}_x
+                \end{equation}
+                \begin{equation}
+                    m g - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_y = m \ddot{r}_y
+                \end{equation}
+            \end{subequations}
 
         \subsection{Computational Tools}
 
@@ -524,41 +533,34 @@ void velocity_verlet(double *time, double *vel,
 
 \chapter{Relativity} \label{sec:relativity}
 
-    \section{Mercury's Perihelion Shift}
+    \section{Effects of Eccentricity on Mercury's Perihelion Shift}
 
-    \section{Effects of Eccentricity}
+        \subsection{Mathematical Model}
 
-    \section{Gravitational Wave Chirp}
+        \subsection{Computational Tools}
 
-    \section{Gravitational Waves}
+        \subsection{Numerical Analysis}
 
+    \section{Mercury's Gravitational Wave Chirp}
 
+        \subsection{Mathematical Model}
 
+        \subsection{Computational Tools}
 
+        \subsection{Numerical Analysis}
 
+    \section{Strong-Field General Relativity}
 
-    \section{Mathematical Model}
+        \subsection{Mathematical Model}
 
-    \section{Computational Tools}
+        \subsection{Computational Tools}
 
-    \section{Numerical Analysis}
-
-\chapter{Chaotic Systems}
-
-    \section{Atmospheric Physics}
-
-    \section{Forced Oscillators}
-
-    \section{Mathematical Model}
-
-    \section{Computational Tools}
-
-    \section{Numerical Analysis}
+        \subsection{Numerical Analysis}
 
 \chapter{Conclusion}
 
-\newpage
-
 \printbibliography
+
+\printindex
 
 \end{document}
