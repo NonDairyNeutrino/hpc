@@ -10,9 +10,9 @@
 % geometry formatting
 \usepackage{authblk}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=0.625in]{geometry}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{parskip, setspace}
-\setstretch{1.5}
+\setstretch{1.15}
 % math formatting
 \usepackage{amsmath, amsfonts}
 % \numberwithin{equation}{section}
@@ -65,152 +65,6 @@
 
 \tableofcontents
 
-% \listoffigures
-
-% \chapter{Introduction}
-
-%     % \begin{itemize}
-%     %     \item There are really hard and complex problems that are reasonably solved by hand
-%     %     \item There are problems with no analytic solution
-%     %     \item There are really big problems that require high-performance computing
-%     %     \item Computational physics lies at the intersection of Math, Physics, and Computer Science
-%     %     \item The difference between ``doing physics on the computer'' and ``computational physics'' is the consideration of numerical analysis
-%     % \end{itemize}
-
-% \chapter{Mathematical Methods}
-
-%     \chapter{Taylor Series}
-
-%     \chapter{Fourier Analysis}
-
-%         \section{Fourier Series}
-
-%         \section{The Fourier Transform}
-
-%     \chapter{Properties of Differential Equations}
-
-%         \section{Order}
-
-%         \section{Linearity}
-
-%         \section{Homogeneity}
-
-%         \section{Chaos \& Entropy}
-
-%             \subsection{Poincar{\'e} Sections}
-
-%     \chapter{Ordinary Differential Equations}
-
-%     \chapter{Partial Differential Equations}
-
-%         \section{Parabolic PDEs}
-
-%             \subsection{The Heat Equation}
-
-%         \section{Hyperbolic PDEs}
-
-%             \subsection{The Wave Equation}
-
-%         \section{Sturm-Liouville Theory}
-
-%         \section{Green's Functions}
-
-%     \chapter{Differential Equations with Conditions}
-
-%         \section{Initial Conditions}
-
-%         \section{Boundary Conditions}
-
-%             % \begin{itemize}
-%             %     \item Dirichlet
-%             %     \item Neumann
-%             %     \item Robin
-%             %     \item Mixed
-%             %     \item Cauchy
-%             % \end{itemize}
-
-%     \chapter{Systems of Differential Equations}
-
-%         \section{Coupled Systems}
-
-%     \chapter{Eigenvalue Problems}
-
-%     \chapter{Optimization}
-
-% \chapter{Computational Methods}
-
-%     \chapter{Programming Language}
-
-%         \section{Fortran}
-
-%         \section{Julia}
-
-%         \section{Python}
-
-%         \section{Matlab \& Mathematica}
-
-%     \chapter{Finite-Differences}
-
-%         \section{Order}
-
-%         \section{Accuracy}
-
-%     \chapter{Runge-Kutta Methods}
-
-%     \chapter{Symplectic Integrators}
-
-%     \chapter{Parareal - Parallel-in-Time Integration}
-
-%     \chapter{The Fast Fourier Transform}
-
-%         \section{FFTW}
-
-%             \subsection{CUDA FFTW}
-
-%     \chapter{Finite-Element Methods}
-
-%     \chapter{Markov Chains \& Monte-Carlo Methods}
-
-% \chapter{Physical Context}
-
-%     \chapter{Orbital Dynamics}
-
-%         \section{The N-Body Problem}
-
-%     \chapter{Fluid Dynamics}
-
-%         \section{The Lattice Boltzmann Method}
-
-%     \chapter{Electrodynamics \& Magnetohydrodynamics}
-
-%         \section{Fringing Electric Fields of Non-Ideal Capacitors}
-
-%     \chapter{Many-Body Quantum Mechanics}
-
-%         \section{Quadrupole-Quadrupole Interactions in a BEC}
-
-%     \chapter{Numerical Relativity}
-
-%         \section{Mercury's Perihelion Shift}
-
-%             \subsection{Effects of Eccentricity}
-
-%             \subsection{Gravitational Wave Chirp}
-
-%         \section{Gravitational Waves}
-
-%     \chapter{Chaotic Systems}
-
-%         \section{Atmospheric Physics}
-
-%         \section{Forced Oscillators}
-
-%     \chapter{Honorable Mentions}
-
-%         \section{Projectile Motion with Drag}
-
-% \chapter{Numerical Analysis}
-    
 %     \chapter{Error}
 
 %     \chapter{Lax Equivalence Theorem}
@@ -632,13 +486,9 @@
 
         \subsection{Computational Tools}
 
-            Finite-difference time-domain
+            Finite-difference time-domain, method of lines
 
         \subsection{Numerical Analysis}
-
-            \begin{itemize}
-                \item 
-            \end{itemize}
 
 \chapter{Quantum Mechanics} \label{sec:quantum}
 
@@ -646,10 +496,25 @@
 
         \subsection{Mathematical Model}
 
-            \begin{itemize}
-                \item The Schr{\"o}dinger Equation
-                \item The Many-Body Schr{\"o}dinger Equation
-            \end{itemize}
+            At the heart of quantum mechanics lies the (time-independent) \emph{Schr{\"o}dinger Equation}\index{Schr{\"o}dinger!Equation}
+
+            \begin{equation}
+                H \psi = E \psi
+            \end{equation}
+
+            where $H$ is a Hermitian operator (i.e. matrix in a basis which is its own conjugate-transpose) known as the \emph{Hamiltonian}\index{Hamiltonian} and $E$ is the (scalar) energy.  Much like how Newton's 2nd Law\index{Newton!2nd Law} determines the motion of classical matter, Schr{\"o}dinger's equation describes the motion of quantum matter.  Thus, the Schr{\"o}dinger equation is the equation of motion in quantum mechanics.
+            
+            The hamiltonian for a collection of molecules and/or atoms can be represented as\cite{cramer2013essentials}
+
+            \begin{equation}
+                H = -\underbrace{\sum_i \frac{\hbar}{2 m_e} \nabla_i^2}_{\text{e motion}} - \underbrace{\sum_k \frac{\hbar}{2 m_e} \nabla_k^2}_{\text{Z motion}} - \underbrace{\sum_{i,k} \frac{e^2 Z_k}{r_{ik}}}_{\text{e-Z interaction}} + \underbrace{\sum_{i < k} \frac{e^2}{r_{ik}}}_{\text{e-e interaction}} + \underbrace{\sum_{k < l} \frac{e^2 Z_k Z_l}{r_{kl}}}_{\text{Z-Z interaction}}
+            \end{equation}
+
+            where $\hbar, m_e, e$ are physical constants, $Z$ is an atomic number, $r$ is the distance between two objects, and $i,j$ run over electrons, $k,l$ run over nuclei.  Additionally, recall that $\nabla^2$ is the Laplacian differential operator defined as $\nabla_i^2 = \partial_{x_i}^2 + \partial_{y_i}^2 + \partial_{z_i}^2$, and $r_{ij} = \sqrt{(x_i - x_j)^2 + (y_i - y_j)^2 + (z_i - z_j)^2}$.
+
+            While there are ``mathematically motivated'' methods (e.g. Runge-Kutta) of numerically solving a second-order (linear!) partial differential equation in $3N$ dimensions ($3N$ because each of the $N$ particles has kinetic and interaction energies in 3 dimensions), because of the physical context of the Schr{\"o}dinger equation, another method can be used: Hartree-Fock Self-Consistent Field Theory (SCF).
+
+            The \emph{variational principle}\index{Variational Principle} of quantum mechanics \textit{effectivley} states that for a ``trial'' wave function $\psi^\prime$, the associated energy as given from the Schr{\"o}dinger equation $E$ satisfies $E \geq E_0$, where $E_0$ is the energy of the ``true'' solution $\psi_0$.  Additionally, the trial wave function $\psi$ can be represented as a linear combination $\psi = \sum_i c_i \phi_i$ of orthonormal (i.e. vectors that are orthogonal and have unit magnitude) functions $\phi_i$ from a \emph{basis set}\index{Basis Set}\footnote{3-21G is a simple choice due to its balance between accuracy and speed\cite{cramer2013essentials}.}.  The combination of the variational principle and the ability to represent the trial wave funciton as a linear combination with unknown weights of known functions, transforms the problem of finding the solution to a partial differential equation in $3N$ dimensions into a \emph{minimization problem}\index{Minimization}.
 
         \subsection{Computational Tools}
 
