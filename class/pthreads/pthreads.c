@@ -53,7 +53,7 @@ int main(){
 	// pthread_create
 	for(int i = 0; i < NUM_THREADS; i++){
 		pthread_create(&IncThreads[i], NULL, inc, (void *)i);
-		pthread_create(&DecThreads[i], NULL, inc, (void *)i);
+		pthread_create(&DecThreads[i], NULL, dec, (void *)i);
 	}
 
 	// pthread_join
