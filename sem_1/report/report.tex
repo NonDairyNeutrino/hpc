@@ -65,7 +65,7 @@
 
 \tableofcontents
 
-\listoffigures
+% \listoffigures
 
 % \chapter{Introduction}
 
@@ -474,23 +474,125 @@
 
     \section{Fringing Electric Fields of Non-Ideal Capacitors}
 
+            The following is taken from previous work\cite{fringingfieldsBealeChapman2019}.
+
         \subsection{Mathematical Model}
 
-            \begin{itemize}
-                \item maxwell's equations
-            \end{itemize}
+            The behavior of the electric field strength in a parallel plate capacitor can be well understood simply using the classical electromagnetism equation $E = \Delta V / d$ where $V$ is the potential difference between the two parallel plates of the capacitor and $d$ is the distance between them. However, this assumes the plates are infinitely large and ``close'' together.  A consequence of this assumption is a constant electric field between the plates and far from the edge in the finite case. We will be exploring the \emph{fringing field}, or the field that exists outside the area between the capacitors and close to the edges.
+
+            While the fringing field is extremely difficult to model analytically, we can make use of the fact that the electric field is proportional to the gradient of the electric potential.  Since the electric potential is smooth, we can consider the electric potential at any point being the average of the electric potential of it's surrounding points. This is a simplified explanation, but as it turns out we can use this idea to model the potential field numerically.
 
         \subsection{Computational Tools}
 
-            \begin{itemize}
-                \item relaxation method
-            \end{itemize}
+            We model the electric potential of a parallel plate capacitor in a grounded box with the \emph{relaxation method} and via the \emph{Gauss-Seidel} (GS) implementation
+        
+            \begin{equation} \label{eq:GS}
+                V_{new}[i,j]=\frac{1}{4}(V_{old}[i+1,j] +V_{new}[i-1,j]+V_{old}[i,j+1]+V_{new}).
+            \end{equation}
+            
+            To strive for maximum computational efficiency, we augment the GS method with a \emph{Simultaneous Over-Relaxation} (SOR) as well. Our SOR method is implemented by augmenting the new potential as 
+            
+            \begin{equation} \label{eq:SOR}
+                V_{new}[i,j]=\alpha \Delta V +V_{old}[i,j],
+            \end{equation}
+            
+            where $\alpha$ is the relaxation coefficient defined by $\alpha = 2 / (1+ \pi / L)$, and $\Delta V$ is the difference between the new value of the potential and the old one.  With the inclusion of SOR, our computation time decreases by a factor of $L$ when compared to not including SOR.  Though, since this implementation is done numerically, several parameters of the system must be stipulated beforehand.
+            
+            First we will model our parallel plate capacitors to have a potential difference of $2 V$ (our left capacitor will be $1 V$ and our right will be $-1 V$), and we will place it in a grounded box of length $L$.  The size of the box, or correspondingly the size of the capacitor, are natural length scales for the problem and one can be defined in terms of the other.
+            
+            As a preliminary step in simulating the system numerically, we must discretize our region into cells of side length $\Delta x$.  To make sure our simulation is at least somewhat accurate, $\Delta x$ should be significantly smaller than the total side length of the grounded/bounding box. This will allow us to assign values of the electric potential to actual areas in the box.  This reassignment, from initial ``best guess'', takes the form of the GS method, shown in Equation \ref{eq:GS}.
 
+            Now that we have a method to determine the potential of a point based on surrounding points, we will need to apply it to our model of the physical system. We will need each 'cell' to have an initial value to use our method, and so we will make an 'initial guess' for all cells that are not part of the boundary conditions. In our case we used an initial guess of $0$ for every point except the capacitors. 
+            
+            To find a reasonable value for the potential at each point we will need to define convergence criteria to compare against in each iteration of the averaging loop.  This is necessary because after the first round of averaging only the cells bordering the capacitors will have any change at all. The more averages we do, the more cells begin being affected by this relaxation method. Once the outermost cells are being affected, the cells closest to the capacitors have gone through many iterations of the average, and so they are more close to the true value than the outer cells. Therefore we defined convergence criteria, forcing our code to continue running through the averages and recalculating the potential until the $\Delta V$, or the difference in the potential value before and after going through the most recent round of averaging, is less than our convergence criteria, which we set to $10^{-5}$. As the cells closer to the capacitors will reach a point of small $\Delta V$ before outer cells will, we have defined our program such that it will continue running until our \textit{maximum} $\Delta V$ is less than our convergence criteria.
+            
+            Now that we have a complete distribution of the electric potential in our system, we can take the negative gradient of the potential to find the electric field at each point.  Though, since we're working in a discrete space, we need to rethink about how we take derivatives.
+
+            \begin{figure}[t]
+                \centering
+                \includegraphics[width=0.45\linewidth]{images/PotentialField.png}
+                \includegraphics[width=0.45\linewidth]{images/PotentialFieldEquipotentials.png}
+                \caption{The electric potential caused by capacitor, whose plates are held at a potential difference of $V=2$, with a boundary condition of $V=0$ at the edges of the box. The left plot shows only the color mapping of the potential while the bottom superimposes equipotential lines separated by $0.25 V$ each on top of the color mapping. The initial guess used for the unknown areas was $0 V$ and the convergence criteria was $10^{-5}$. The box/system is $1 \mathrm{m} \times 1 \mathrm{m}$, while the cell size is $\frac{1}{50^2} \ \mathrm{m^2}$. The separation of the capacitors is 0.4 m and it's length is 0.5 m.}
+                \label{fig:PotentialField}
+            \end{figure}
+            
+            To calculate the electric field we will consider a change in potential over a distance, which can be done with the equation
+            
+            \begin{equation} \label{eq:efieldcomponents}
+                \begin{split}
+                    E_x &=-\frac{1}{2}\left(\frac{V[i+1,j]-V[i-1,j]}{\Delta x}\right) \\
+                    E_y &=-\frac{1}{2}\left(\frac{V[i,j+1]-V[i,j-1]}{\Delta x}\right).
+                \end{split}
+            \end{equation}
+            
+            These components can be used to not only show the vector field, but also to give the \emph{magnitude} of the electric field at each point.  The magnitude of the electric field at each point is then the norm of the electric field vectors at the respective points.
+
+            Using the computational methods described in Sec. \ref{sec:Theory}, we created a plot of the potential field within our range. In Figure \ref{fig:PotentialField} we are able to observe the potential across our space. As expected our potential is highest at our left capacitor, with a voltage of +1 V, and lowest at our right capacitor, with a voltage of -1 V. Our boundary conditions at the edge also appear to be near/at zero which is to be expected. 
+        
+            By looking at the second plot in Figure \ref{fig:PotentialField} we can see that the electric field in between the two capacitors should be fairly constant, which is to be expected as that is the point of capacitors. 
+            
+            Using Equations \ref{eq:efieldcomponents}, we were able to calculate an electric field for each cell and plot them in a vector plot, shown in Figure \ref{fig:ElectricField}. The electric field looks much like we would expect it to. As we can see in the bottom plot, the electric field vectors are perpendicular to the equipotential lines, which attests to the physical accuracy of of our model. The electric field behaves like we would expect it would, with the fringing field being weaker than the field between the capacitors. The field between the capacitors is relatively constant, which is what we would hope for. We see that there is the highest magnitude electric field right around the edges of the capacitors, which makes sense as that is where the potential will be changing the fastest from the potential of the capacitor to the ground value of the edges.
+            
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.27\linewidth]{images/ElectricField.png}
+                \includegraphics[width=0.32\linewidth]{images/ElectricFieldMagnitude.png}
+                \includegraphics[width=0.34\linewidth]{images/ElectricFieldWithPotential.png}
+                \caption{(Left) Electric field in the area of interest. (Center) The top plot shows the electric field vectors on their own, which the second superimposes a color map on top that represents the magnitude of the electric field in $\frac{\text{V}}{\frac{1}{50}\text{m}}$, or 50V/m. The third plot superimposes our potential field on top of the electric field lines. Variables used are the same as in Figure \ref{fig:PotentialField}.}
+                \label{fig:ElectricField}
+            \end{figure}
+            
         \subsection{Numerical Analysis}
 
-            \begin{itemize}
-                \item spatial mesh
-            \end{itemize}
+            As a final test of the physical accuracy of our model, we chose a spot directly centered between the two capacitors and observed how the electric field at this point changed as the separation of capacitors changed. We did this because for an ideal capacitor we can calculate the electric field simply by using Equation \ref{eq:efield}.
+            
+            By using both the numerical and analytical solutions shown in Figure \ref{fig:compare} we can conclude that our model seems to be more accurate for smaller seperations and increase in error as the plates get further apart. 
+            
+            As we can see in Figure \ref{fig:compare}, the error increases as the capacitor separation increases, which makes sense if we look back to how we need more iterations of our Gauss-Streisel SOR method to reach cells that are further away from our boundary conditions. This means that the cell in the center that we are observing has probably only recently met the convergence criteria and so is more prone to error than those that continued to be averaged long past meeting the convergence criteria. 
+            
+            This also makes sense physically as Equation \ref{eq:efield} assumes a perfect capacitor, which true capacitors will not have perfectly constant electric fields.
+            
+            As we can explain the error physically and it is small, we can use it as a model for our system.
+            
+            Finally we observed how cell size affected our results for the electric field. 
+            
+            The trend shows that as cell size is decreased it trends towards lower percent error in the electric field magnitude and thus towards a numerical convergence. We are not quite sure what the bump near 0.03 cell size means and could not identify a physical or numerical cause. As the rest of the points seems to follow a trend, we chose to make the assumption that the point was inconsistent and do not address it further.
+
+            \begin{figure}[t]
+                \centering
+                \includegraphics[width=0.48\linewidth]{images/NumericalAnalytic.png}
+                \includegraphics[width=0.49\linewidth]{images/PercentErrorSep.png}
+                \caption{The top plot shows the analytic and numerical solution for the electric field magnitude directly between the parallel plate capacitors while the bottom one shows the percent error as a function of plate separation. Other than the varied plate separation, all variables used are the same as used in Figure \ref{fig:PotentialField}.}
+                \label{fig:compare}
+            \end{figure}
+            
+            Having confirmed the physical validity of our model, we proceeded to investigate how the fringing field varied with respect to plate separation and distance from capacitor.
+        
+            As we can see from the plots of the electric field in Figure \ref{fig:ElectricField}, the electric field is strongest at the corners of the capacitor and in between the capacitors and gets weaker as we move further away, into the fringing fields. 
+            
+            As for the dependence on distance between the capacitors, we were able to plot the electric field for a chosen point outside the capacitors and plot it as a function of changing separation, shown in Figure \ref{fig:sep}.
+            
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.66\linewidth]{images/FringeChangingSep.png}
+                \caption{The numerically calculated electric field magnitude is plotted above as a function of the separation between the capacitors.}
+                \label{fig:sep}
+            \end{figure}
+            
+            In this figure, we can observe that the electric field magnitude at a spot that is 0.5 meters across the cell horizontally and 0.2 meters down from the top ground boundary condition decreases as the plate separation increases.
+        
+            Our model for the fringing electric field around a capacitor has created a system that seems physically reliable, as shown through it's similarity to the numerical solution in Figure \ref{fig:compare} and when evaluating cell size. Our model has allowed us to observe the fringing field for varying separations and distances from the capacitor. 
+            
+            Our model is limited in the resolution to which we can model the system, i.e. how small the cell size can be, due to computational time. We used a cell size of 1/50 m for all of our plots except when we were varying cell size and this achieved a resolution that was relatively smooth and resulted in enough data points to evaluate it's accuracy, as shown in Figure \ref{fig:compare}. If we made the cell size smaller, we would get smoother plots of the electric field magnitude and could model the relation to changing variables a bit more accurately, but as we had to calculate so many points for each plot the computation time took significantly longer than the added resolution was worth.
+            
+            Finally, we saw a weird 'bump' in our plot of the percent error in Figure \ref{fig:cellsize} which interrupted what seemed to be a fairly smooth trend. We were unable to identify the cause of the bump, but as it was small and seemed to still trend towards lower values overall, we are comfortable saying that the percent error in the electric field magnitude decreases with decreasing cell size.
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=0.66\linewidth]{images/PercentErrorCell.png}
+                \caption{The percent error in the Electric Field when using the cell size of 0.01 m as a baseline. Other than varying cell size, all variables used are the same as in Figure \ref{fig:PotentialField}.}
+                \label{fig:cellsize}
+            \end{figure}
 
 \pagebreak
 
@@ -530,9 +632,7 @@
 
         \subsection{Computational Tools}
 
-            \begin{itemize}
-                \item 
-            \end{itemize}
+            Finite-difference time-domain
 
         \subsection{Numerical Analysis}
 
