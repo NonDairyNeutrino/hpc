@@ -242,10 +242,10 @@
     The motion of ``classical'' objects, ranging in scale from biological cells, sand, ants, birds, cars, airplanes, planets, up to stars, can described as the solution to what's called the \emph{equation of motion}\index{Equation of Motion}.  The equation of motion for an object with mass $m$ under the influence of forces $F_i$ is determined by Newton's 2nd law of motion\index{Newton!2nd Law}
     
     \begin{equation} \label{eq:newton}
-        \sum_i \vec{F}_i = m \ddot{\vec{x}},
+        \sum_i \mathbf{F}_i = m \ddot{\mathbf{x}},
     \end{equation}
 
-    where $\ddot{\vec{x}}$ represents the second time derivative\index{Derivative} of the position\index{Position} $\vec{x}$ known as \emph{acceleration}\index{Acceleration}.  These forces completely determine the how objects move through space in time.
+    where $\ddot{\mathbf{x}}$ represents the second time derivative\index{Derivative} of the position\index{Position} $\mathbf{x}$ known as \emph{acceleration}\index{Acceleration}.  These forces completely determine the how objects move through space in time.
     
     Mathematically, the resulting equation is a vector second-order ordinary differential equation\index{Differential Equation!Second Order}, compactly representing the underlying system of differential equations\index{Differential Equation!System}.  In many cases, this differential equation is homogenous\index{Differential Equation!Homogenous} to represent no time-dependent external forces supplying the physical system with energy\index{Energy}.  Likewise, sometimes these forces can be represented by nonlinear\index{Nonlinear} terms; making the equation of motion much more complex.
     
@@ -442,26 +442,35 @@
 
             Beginning again from Newton's second law\index{Newton!2nd Law} as described with equation (\ref{eq:newton}), we can fully determine the motion of an object under the influence of gravity and both linear and quadratic drag as\cite{taylor2005classical}
 
-            \begin{equation}
-                m \vec{g} - b \left|\left| \dot{\vec{r}} \right|\right| \hat{\dot{r}} - c \left|\left|\dot{\vec{r}}\right|\right|^2 \hat{r} = m \ddot{\vec{r}}
-            \end{equation}
+            \begin{subequations}
+                \begin{equation}
+                    m \mathbf{g} - b \left|\left| \dot{\mathbf{r}} \right|\right| \hat{\dot{r}} - c \left|\left|\dot{\mathbf{r}}\right|\right|^2 \hat{r} = m \ddot{\mathbf{r}}
+                \end{equation}
+                \begin{equation}
+                    ||\mathbf{v}|| \hat{v} = \mathbf{v} \implies m \mathbf{g} - b \dot{\mathbf{r}} - c \left|\left|\dot{\mathbf{r}}\right|\right| \dot{\mathbf{r}} = m \ddot{\mathbf{r}}
+                \end{equation}
+            \end{subequations}
 
-            where $b,c$ are physical constants $\vec{g}$ is the acceleration of gravity near the surface of Earth (i.e. where the air is).  Because this equation cannot be represented as the application of a differential operator on a function or vector of functions, this equation of motion is a \emph{nonlinear} differential equation\index{Differential Equation!Nonlinear}.  In fact, because this is again a vector equation, there are actually three nonlinear differential equations that, due to the magnitude of the velocity, all rely on each other; thus this differential equation is said to be a \emph{coupled system}\index{Differential Equation!Coupled} of differential equations.  Expanded out, the equation of motion becomes
+            where $b, c$ are physical constants determined by the geometry of the object and the medium in which it is moving, $\mathbf{g}$ is the acceleration of gravity near the surface of Earth (i.e. where the air is).  Because this equation cannot be represented as the application of a differential operator on a function or vector of functions, this equation of motion is a \emph{nonlinear} differential equation\index{Differential Equation!Nonlinear}.  In fact, because this is again a vector equation, there are actually three nonlinear differential equations that, due to the magnitude of the velocity, all rely on each other; thus this differential equation is said to be a \emph{coupled system}\index{Differential Equation!Coupled} of differential equations.  Expanded out, the equation of motion becomes the system of equations
 
             \begin{subequations}
                 \begin{equation}
-                    - b \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \hat{\dot{r}} - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_x = m \ddot{r}_x
+                    - b \dot{r}_x - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_x = m \ddot{r}_x
                 \end{equation}
                 \begin{equation}
-                    m g - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_y = m \ddot{r}_y
+                    m g - b \dot{r}_y - c \sqrt{\dot{r}_x^2 + \dot{r}_y^2} \ \dot{r}_y = m \ddot{r}_y.
                 \end{equation}
             \end{subequations}
 
         \subsection{Computational Tools}
 
+            Just like with orbital mechanics, finite differences can be used to discretize\index{discretize} the differential equation.
+
         \subsection{Numerical Analysis}
 
 \chapter{Electromagnetism}
+
+\pagebreak
 
     \section{Fringing Electric Fields of Non-Ideal Capacitors}
 
@@ -483,13 +492,41 @@
                 \item spatial mesh
             \end{itemize}
 
+\pagebreak
+
     \section{Antenna Radiation Patterns}
 
         \subsection{Mathematical Model}
 
-            \begin{itemize}
-                \item maxwell's equations
-            \end{itemize}
+            In a more general setting, modelling how the electric and magnetic fields change in time and space requires the solutions to \emph{Maxwell's Equations}\index{Maxwell's Equations}\cite{griffiths2017introduction}, succinctly represented as
+
+            \begin{equation}
+            \begin{aligned}
+                \nabla \cdot \mathbf{E}  &= \frac{\rho}{\epsilon_0}                 & \nabla \cdot \mathbf{B}  &= 0 \\
+                \nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t} & \nabla \times \mathbf{B} &= \mu_0 \mathbf{J} + \mu_0 \epsilon_0 \frac{\partial \mathbf{E}}{\partial t}.
+            \end{aligned}
+            \end{equation}
+
+            where $\mathbf{E}, \mathbf{B}, \mathbf{J}$
+
+            Expanded, these equations take the form
+
+            \begin{equation}
+            \begin{aligned}
+                \partial_x E_x(t, \mathbf{r}) + \partial_y E_y(t, \mathbf{r}) + \partial_z E_z(t, \mathbf{r}) &= \frac{\rho}{\epsilon_0}                 & \partial_x B_x(t, \mathbf{r}) + \partial_y B_y(t, \mathbf{r}) + \partial_z B_z(t, \mathbf{r})  &= 0 \\
+                \begin{bmatrix}
+                    \partial_y E_z - \partial_z E_y \\
+                    \partial_z E_x - \partial_x E_z \\
+                    \partial_x E_y - \partial_y E_x \\
+                \end{bmatrix} &= -\partial_t \begin{bmatrix} B_x \\ B_y \\ B_z \end{bmatrix} & \begin{bmatrix}
+                    \partial_y B_z - \partial_z B_y \\
+                    \partial_z B_x - \partial_x B_z \\
+                    \partial_x B_y - \partial_y B_x \\
+                \end{bmatrix} &= \mu_0 \rho \begin{bmatrix} v_x \\ v_y \\ v_z \end{bmatrix} + \mu_0 \epsilon_0 \partial_t \begin{bmatrix} E_x \\ E_y \\ E_z \end{bmatrix}.
+            \end{aligned}
+            \end{equation}
+
+            In their expanded form, Maxwell's equations form a coupled\index{Differential Equation!Coupled} system\index{Differential Equation!System} of eight \emph{partial} differential equations\index{Differential Equations!Partial} (i.e. differential equations whose solutions depend on more than one variable).  Because each of these equations must be solved simultaneously, modelling the dynamics of the electromagnetic field throughout space is quite challenging.
 
         \subsection{Computational Tools}
 
