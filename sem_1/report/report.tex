@@ -514,9 +514,17 @@
 
             While there are ``mathematically motivated'' methods (e.g. Runge-Kutta) of numerically solving a second-order (linear!) partial differential equation in $3N$ dimensions ($3N$ because each of the $N$ particles has kinetic and interaction energies in 3 dimensions), because of the physical context of the Schr{\"o}dinger equation, another method can be used: Hartree-Fock Self-Consistent Field Theory (SCF).
 
-            The \emph{variational principle}\index{Variational Principle} of quantum mechanics \textit{effectivley} states that for a ``trial'' wave function $\psi^\prime$, the associated energy as given from the Schr{\"o}dinger equation $E$ satisfies $E \geq E_0$, where $E_0$ is the energy of the ``true'' solution $\psi_0$.  Additionally, the trial wave function $\psi$ can be represented as a linear combination $\psi = \sum_i c_i \phi_i$ of orthonormal (i.e. vectors that are orthogonal and have unit magnitude) functions $\phi_i$ from a \emph{basis set}\index{Basis Set}\footnote{3-21G is a simple choice due to its balance between accuracy and speed\cite{cramer2013essentials}.}.  The combination of the variational principle and the ability to represent the trial wave funciton as a linear combination with unknown weights of known functions, transforms the problem of finding the solution to a partial differential equation in $3N$ dimensions into a \emph{minimization problem}\index{Minimization}.
+            The \emph{variational principle}\index{Variational Principle} of quantum mechanics \textit{effectivley} states that for a ``trial'' wave function $\psi^\prime$, the associated energy as given from the Schr{\"o}dinger equation $E$ satisfies $E \geq E_0$, where $E_0$ is the energy of the ``true'' solution $\psi_0$.  Additionally, the trial wave function $\psi$ can be represented as a linear combination $\psi = \sum_i c_i \phi_i$ of orthonormal (i.e. vectors that are orthogonal and have unit magnitude) functions $\phi_i$ from a \emph{basis set}\index{Basis Set}\footnote{3-21G is a simple choice due to its balance between accuracy and speed\cite{cramer2013essentials}.}.  Physically, these basis functions represent single-electron molecular orbitals.  The combination of the variational principle and the ability to represent the trial wave funciton as a linear combination with unknown weights of known functions, transforms the problem of finding the solution to a partial differential equation in $3N$ dimensions into a \emph{minimization problem}\index{Minimization}.
 
         \subsection{Computational Tools}
+
+            Because the process to determine the energy of the multi-particle wave function is so complex, it is often done as an iterative approach.
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width = 0.675\linewidth]{images/hartree_fock.png}
+                \caption{Diagram\cite{scf} showing the iterative nature of the Hartree-Fock Self Consistent Field Method. Source}
+            \end{figure}
 
         \subsection{Numerical Analysis}
 
