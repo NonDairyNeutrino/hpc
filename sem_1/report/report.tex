@@ -48,6 +48,14 @@
 % rich text
 \usepackage{graphicx, caption, wrapfig}
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=red,  
+    urlcolor=blue,
+    citecolor=teal,
+    pdftitle={A Survey of Computational Physics},
+    pdfpagemode=FullScreen,
+}
 % bibliography
 \usepackage{biblatex}
 \addbibresource{bib.bib}
@@ -492,6 +500,8 @@
 
 \chapter{Quantum Mechanics} \label{sec:quantum}
 
+\pagebreak
+
     \section{Quantum Chemistry}
 
         \subsection{Mathematical Model}
@@ -542,6 +552,15 @@
         \subsection{Numerical Analysis}
 
 \chapter{Relativity} \label{sec:relativity}
+
+    One of the most fundamental concepts in analytic geometry is the coordinate system\index{System!Coordinate}.  Coordinate systems are composed of scale, direction, and origin\footnote{More technically, these terms scale $\rightarrow$ algebraic field, direction $\rightarrow$ a set of basis vectors}.  Given two coordinate systems, a position in space can be represented in either system, but there also exists a transformation between the two coordinate systems so that if you know the position in one coordinate system and the transformation between the systems, you can calculate the position in the other coordinate system.  This remains true even if the origin of the coordinate system is moving.  The study of how physical properties are represented and change between these coordinate systems is called \emph{relativity}\index{Relativity}.  
+    
+    While there is Galilean relativity, which deals with objects whose speed is unbounded, more accurate models of physics have been introduced\cite{einstein1905electrodynamics} with a ``universal speed limit'', bounding the speed at which any object can travel.  This model is called \emph{Special Relativity}\index{Relativity!Special}, and this relatively small change (no pun intended) in fact has drastic consequences when considering objects moving at near this speed limit.  These relativistic effects are highlighted when there are many obejcts to compare\footnote{\href{https://youtu.be/qol-zP9W5J4?si=7ty4vfO9ceFox48e}{OpenRelativity} visualization}\cite{openrelativity}. The mathematical model describing the physics of Special Relativity is relatively (again, no pun intended) simple compared to its more encompassing mathematical model, \emph{General Relativity}\index{Relativity!General}.
+
+    General Relativity is...weird
+
+\vfill
+\pagebreak
 
     \section{Effects of Eccentricity on Mercury's Perihelion Shift}
 

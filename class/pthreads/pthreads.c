@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define ITERATIONS 10
-#define NUM_THREADS 2
+#define ITERATIONS 10000
+#define NUM_THREADS 100000
 
 int a = 0;
 
