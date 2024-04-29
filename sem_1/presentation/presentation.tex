@@ -1,0 +1,95 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\title[Computational Physics]{A Survey of Computational Physics}
+% \subtitle{}
+
+\author[Chapman, Nathan]{Nathan Chapman\inst{1}}
+
+\institute[CWU]
+{
+  \inst{1}
+  Faculty of Physics\\
+  Central Washington University
+%   \and
+%   \inst{2}%
+%   Faculty of Chemistry\\
+%   Very Famous University
+}
+
+\date[HPC 2024]{CS 530: High Performance Computing, Spring 2024}
+
+\logo{\includegraphics[height=0.5cm]{images/cwu_logo.png}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% \begin{frame}
+%     \frametitle{Table of Contents}
+%     \tableofcontents
+% \end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+    \hspace{0.25in} \underline{Pillars of Physics} \hfill \underline{Computational Applications}
+    \begin{itemize}
+        \item <1-> Classical Mechanics \phantom{  } \rightarrowfill \phantom{  } N-Body Simulations \& Fluid Dynamics
+        \item <2-> Electromagnetism \phantom{  } \rightarrowfill \phantom{  } Fringing Fields \& Antenna Radiation
+        \item <3-> Thermodynamics \phantom{  } \rightarrowfill \phantom{  } ???
+        \item <4-> Quantum Mechanics \phantom{  } \rightarrowfill \phantom{  } Molecular Optimization \& Ultra-Cold Gases
+        \item <5-> Relativity \phantom{  } \rightarrowfill \phantom{  } Mercury's Perihelion \& Black Hole Ray Tracing
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Classical Mechanics}
+    \begin{block}{Remark}
+        Given the position and velocity of and the forces acting on an object, the motion of that object is completely determined.
+    \end{block}
+    \begin{itemize}
+        \item Everday physics can be completed described by Newton's 2nd Law.
+              \begin{equation} \label{eq:newton}
+                  \underbrace{\sum_i \mathbf{F}_i = m \ddot{\mathbf{r}}}_\text{Equation of Motion}
+              \end{equation}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sample frame title}
+    
+    In this slide, some important text will be
+    \alert{highlighted} because it's important.
+    Please, don't abuse it.
+    
+    \begin{block}{Remark}
+    Sample text
+    \end{block}
+    
+    \begin{alertblock}{Important theorem}
+    Sample text in red box
+    \end{alertblock}
+    
+    \begin{examples}
+    Sample text in green box. The title of the block is ``Examples".
+    \end{examples}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Two-column slide}
+    \begin{columns}
+    \column{0.5\textwidth}
+    This is a text in first column.
+    $$E=mc^2$$
+    \begin{itemize}
+    \item First item
+    \item Second item
+    \end{itemize}
+    
+    \column{0.5\textwidth}
+    This text will be in the second column
+    and on a second thoughts, this is a nice looking
+    layout in some cases.
+    \end{columns}
+\end{frame}
+
+\end{document}
