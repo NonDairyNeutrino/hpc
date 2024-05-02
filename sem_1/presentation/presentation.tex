@@ -1,13 +1,36 @@
 \documentclass{beamer}
+
+\usepackage{parskip, setspace}
+\setstretch{1.5}
+
+\usepackage{biblatex}
+\addbibresource{bib.bib}
+% math formatting
+\usepackage{amsmath, amsfonts, braket}
+% \numberwithin{equation}{section}
+% rich text
+\usepackage{graphicx, caption, multimedia}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,  
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={A Survey of Computational Physics},
+    pdfpagemode=FullScreen,
+}
+
+\usepackage{algorithm2e}
+
 \usetheme{Madrid}
-\title[Computational Physics]{A Survey of Computational Physics}
+\title[Computational Physics]{Computational Physics}
 % \subtitle{}
 
-\author[Chapman, Nathan]{Nathan Chapman\inst{1}}
+\author[Chapman, Nathan]{Nathan Chapman}
 
 \institute[CWU]
 {
-  \inst{1}
   Faculty of Physics\\
   Central Washington University
 %   \and
@@ -24,22 +47,104 @@
 
 \frame{\titlepage}
 
-% \begin{frame}
-%     \frametitle{Table of Contents}
-%     \tableofcontents
-% \end{frame}
+\begin{frame}
+    % \frametitle{<title>}
+
+    \begin{block}{}
+        \centering \Large Why do we need computers to do physics?
+    \end{block}
+
+\end{frame}
 
 \begin{frame}
-\frametitle{Introduction}
-    \hspace{0.25in} \underline{Pillars of Physics} \hfill \underline{Computational Applications}
-    \begin{itemize}
-        \item <1-> Classical Mechanics \phantom{  } \rightarrowfill \phantom{  } N-Body Simulations \& Fluid Dynamics
-        \item <2-> Electromagnetism \phantom{  } \rightarrowfill \phantom{  } Fringing Fields \& Antenna Radiation
-        \item <3-> Thermodynamics \phantom{  } \rightarrowfill \phantom{  } ???
-        \item <4-> Quantum Mechanics \phantom{  } \rightarrowfill \phantom{  } Molecular Optimization \& Ultra-Cold Gases
-        \item <5-> Relativity \phantom{  } \rightarrowfill \phantom{  } Mercury's Perihelion \& Black Hole Ray Tracing
-    \end{itemize}
+    \frametitle{An Illuminating Example - 2-Body Problem}
+    \vspace{-0.75in}
+    \begin{equation*}
+        \vec{F}_{ij} = \frac{G m_i m_j}{r_{ij}^2} \hat{r} \qquad \qquad \sum_j \vec{F}_{ij} = m_i \ddot{\vec{r}}_i
+    \end{equation*}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item 2 masses
+            \item 1 unique force
+            \item 2 equations of motion in 3 dimensions
+            \item 6 coupled 2nd-order ordinary differential equations
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \movie[autostart,loop,height=1.5in,width=\textwidth]{}{Orbit5.gif}
+    \end{columns}
 \end{frame}
+
+\begin{frame}
+    \frametitle{An Illuminating Example - 3-Body Problem}
+    \vspace{-0.75in}
+    \begin{equation*}
+        \vec{F}_{ij} = \frac{G m_i m_j}{r_{ij}^2} \hat{r} \qquad \qquad \sum_j \vec{F}_{ij} = m_i \ddot{\vec{r}}_i 
+    \end{equation*}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item 3 masses
+            \item 3 unique forces
+            \item 3 equations of motion in 3 dimensions
+            \item 9 coupled 2nd-order ordinary differential equations
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \movie[autostart,loop,height=1.5in,width=\textwidth]{}{3_body.gif}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{An Illuminating Example - ``All''-Body Problem}
+    \vspace{-0.75in}
+    \begin{equation*}
+        \vec{F}_{ij} = \frac{G m_i m_j}{r_{ij}^2} \hat{r} \qquad \qquad \sum_j \vec{F}_{ij} = m_i \ddot{\vec{r}}_i 
+    \end{equation*}
+
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item 1.24 trillion masses
+            \item $7.688\times 10^{23}$ unique forces
+            \item 1.24 trillion equations of motion in 3 dimensions
+            \item 3.72 trillion coupled 2nd-order ordinary differential equations
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \href{https://youtu.be/JAyrpJCC_dw?si=eY7EbSKib7siokgG}{Cosmological N-Body Simulation}\cite{Heitmann_2021}
+    \end{columns}
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{An Illuminating Example}
+%     \begin{columns}
+%         \column{0.5\textwidth}
+%         \begin{itemize}
+%             \item Direct algorithm
+%             \item Velocity Verlet
+%         \end{itemize}
+        
+%         \column{0.5\textwidth}
+%         Algorithm psuedo-code goes
+        
+%         \end{columns}
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Introduction}
+%     \hspace{0.25in} \underline{Pillars of Physics} \hfill \underline{Computational Applications}
+%     \begin{itemize}
+%         \item <1-> Classical Mechanics \phantom{  } \rightarrowfill \phantom{  } N-Body Simulations \& Fluid Dynamics
+%         \item <2-> Electromagnetism \phantom{  } \rightarrowfill \phantom{  } Fringing Fields \& Antenna Radiation
+%         \item <3-> Thermodynamics \phantom{  } \rightarrowfill \phantom{  } ???
+%         \item <4-> Quantum Mechanics \phantom{  } \rightarrowfill \phantom{  } Molecular Optimization \& Ultra-Cold Gases
+%         \item <5-> Relativity \phantom{  } \rightarrowfill \phantom{  } Mercury's Perihelion \& Black Hole Ray Tracing
+%     \end{itemize}
+% \end{frame}
 
 \begin{frame}
     \frametitle{Classical Mechanics}
@@ -54,42 +159,29 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Sample frame title}
+% \begin{frame}
+%     \frametitle{Sample frame title}
     
-    In this slide, some important text will be
-    \alert{highlighted} because it's important.
-    Please, don't abuse it.
+%     In this slide, some important text will be
+%     \alert{highlighted} because it's important.
+%     Please, don't abuse it.
     
-    \begin{block}{Remark}
-    Sample text
-    \end{block}
+%     \begin{block}{Remark}
+%     Sample text
+%     \end{block}
     
-    \begin{alertblock}{Important theorem}
-    Sample text in red box
-    \end{alertblock}
+%     \begin{alertblock}{Important theorem}
+%     Sample text in red box
+%     \end{alertblock}
     
-    \begin{examples}
-    Sample text in green box. The title of the block is ``Examples".
-    \end{examples}
-\end{frame}
+%     \begin{examples}
+%     Sample text in green box. The title of the block is ``Examples".
+%     \end{examples}
+% \end{frame}
 
-\begin{frame}
-    \frametitle{Two-column slide}
-    \begin{columns}
-    \column{0.5\textwidth}
-    This is a text in first column.
-    $$E=mc^2$$
-    \begin{itemize}
-    \item First item
-    \item Second item
-    \end{itemize}
-    
-    \column{0.5\textwidth}
-    This text will be in the second column
-    and on a second thoughts, this is a nice looking
-    layout in some cases.
-    \end{columns}
+\nocite{*}
+\begin{frame}[allowframebreaks]
+\printbibliography
 \end{frame}
 
 \end{document}
