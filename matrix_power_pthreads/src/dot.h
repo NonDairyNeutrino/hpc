@@ -1,0 +1,1 @@
+float dot(float vec1[], float vec2[]);
