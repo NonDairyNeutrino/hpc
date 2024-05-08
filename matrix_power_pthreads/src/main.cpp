@@ -11,7 +11,7 @@
 
 int main() {
   // initialize vectors
-  float vec1[3] = {1,1,1};
+  float vec1[1] = {1};
   float vec2[3] = {1,1,1};
   // calculate dot product
   float result = dot(vec1, vec2);
