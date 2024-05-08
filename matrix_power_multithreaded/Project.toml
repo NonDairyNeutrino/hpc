@@ -1,0 +1,13 @@
+name = "matrix_power_multithreaded"
+uuid = "df4bcd3a-9c6b-4a22-b420-8a4c591beba3"
+authors = ["nondairyneutrino <nathaniel.chapman@cwu.edu> and contributors"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1.6.7"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

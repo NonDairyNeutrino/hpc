@@ -1,1 +1,0 @@
-float** matrix_multiply(float* mat[], float* mat_tran[], int n_rows, int n_cols);
