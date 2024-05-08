@@ -8,11 +8,14 @@ function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
 end
 
 function matrix_multiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")
+    # initialize product matrix
+    product = Matrix{Float64}(undef, size(mat1)[1], size(mat2)[2])
+    # choose behavior based on specified threading
     if threaded == "none"
-        product = Matrix(undef, size(mat1)[1], size(mat2)[2])
         # do regular matrix multiplication
-        for i in eachrow(mat1)
-            for j in eachcol(mat2)
+        println("Proceeding with sequential matrix multiplication...")
+        for i in 1:size(mat1)[1]
+            for j in 1:size(mat2)[2]
                 product[i,j] = dot(mat1[i,:], mat2[:,j])
             end
         end
@@ -20,11 +23,36 @@ function matrix_multiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threa
     elseif threaded == "element"
         # matrix multiplication where each element of the product
         # is calculated in its own threaded
+        println("Proceeding with element-threaded matrix multiplication...")
+        Threads.@threads for i in 1:size(mat1)[1]
+            Threads.@threads for j in 1:size(mat2)[2]
+                product[i,j] = dot(mat1[i,:], mat2[:,j])
+            end
+        end
     elseif threaded == "row"
         # matrix multiplication where each row of the product
         # is calculated in its own threaded
+        println("Proceeding with row-threaded matrix multiplication...")
+        Threads.@threads for i in 1:size(mat1)[1]
+            for j in 1:size(mat2)[2]
+                product[i,j] = dot(mat1[i,:], mat2[:,j])
+            end
+        end
     elseif threaded == "column"
         # matrix multiplication where each column of the product
         # is calculated in its own threaded
+        println("Proceeding with column-threaded matrix multiplication...")
+        for i in 1:size(mat1)[1]
+            Threads.@threads for j in 1:size(mat2)[2]
+                product[i,j] = dot(mat1[i,:], mat2[:,j])
+            end
+        end
     end
+    return product
+end
+
+mat = Float64[2 0 0; 0 2 0; 0 0 2]
+println("Using ", Threads.nthreads(), " threads")
+for thread_behavior in ["none", "element", "row", "column"]
+    matrix_multiply(mat, mat; threaded=thread_behavior) |> display
 end
