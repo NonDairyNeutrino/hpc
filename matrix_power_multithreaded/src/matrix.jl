@@ -7,7 +7,7 @@ function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
     return dot_product
 end
 
-function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")``
+function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")
     # initialize product matrix
     product = Matrix{Float64}(undef, size(mat1)[1], size(mat2)[2])
     # choose behavior based on specified threading
