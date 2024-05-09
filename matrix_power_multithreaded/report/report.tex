@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.625in]{geometry}
+\usepackage{parskip, setspace}
+\setstretch{1.15}
+\usepackage{amsmath, amsfonts}
+%\numberwithin{equation}{subsection}
+\usepackage{graphicx, caption, wrapfig}
+\usepackage{hyperref}
+\usepackage{multirow}
+
+\usepackage{biblatex}
+\addbibresource{bib.bib}
+
+\renewcommand{\arraystretch}{1.5}
+
+\title{\Large \vspace{-0.5in} CS 530: High-Performance Computing \\ Benchmarking Matrix Multiplication: Sequential vs Multithreaded \vspace{-0.25in}}
+\author{Nathan Chapman \vspace{-0.05in} \\ \normalsize Department of Computer Science \vspace{-0.15in} \\ \normalsize Central Washington University}
+\date{\normalsize \vspace{-0.15in}\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\pagebreak
+
+\section{Introduction}
+
+    \begin{itemize}
+        \item Many things can benefit from parallel execution
+        \item Matrix multiplication is ``embarissingly parallel''
+        \item Makes it a good benchmark to compare sequential execution to parallel
+    \end{itemize}
+
+\section{Methods}
+
+    \begin{itemize}
+        \item Julia
+        \item Threadpools
+        \item Multithreading
+        \item Computational Complexity of sequential
+        \item Computational Complexity of parallel
+    \end{itemize}
+
+\section{Results}
+
+    \begin{itemize}
+        \item Timing plots for many long running experiments
+        \item run timings multiple times
+    \end{itemize}
+
+\section{Discussion}
+
+    \begin{itemize}
+        \item multithreading can be hard to implement
+        \item sometimes it can be easier when the problem is embarissingly parallel
+        \item new languages make parallelism trivial
+        \item parallel implementation can save potentially massive amounts of time
+        \item further parallelism and performance can be achieved with GPU programming like CUDA
+    \end{itemize}
+
+\section{Conclusion}
+
+    \begin{itemize}
+        \item a lot of applications take a long time because a lot of things need to be done
+        \item these applications can benefit from parallelism via multithreading
+        \item 
+    \end{itemize}
+
+\end{document}
