@@ -1,6 +1,3 @@
-using LinearAlgebra
-using BenchmarkTools
-
 # matrix multiplication
 function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
     dot_product = 0
@@ -10,7 +7,7 @@ function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
     return dot_product
 end
 
-function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")
+function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")``
     # initialize product matrix
     product = Matrix{Float64}(undef, size(mat1)[1], size(mat2)[2])
     # choose behavior based on specified threading
@@ -61,11 +58,4 @@ function matrixPower(mat :: Matrix{Float64}, power :: Int; threaded = "none")
         mat_pow = matrixMultiply(mat, mat_pow; threaded = threaded)
     end
     return mat_pow
-end
-
-mat = 2 * I(1000) |> Matrix{Float64}
-println("Using ", Threads.nthreads(), " threads")
-for thread_behavior in ["none", "element", "row", "column"]
-    println("Beginning thread behavior: $thread_behavior")
-    @time matrixPower(mat, 10; threaded=thread_behavior) |> display
 end
