@@ -54,7 +54,7 @@ end
 function matrixPower(mat :: Matrix{Float64}, power :: Int; threaded = "none")
     mat_pow = mat
     for p in 2:power
-        println("Beginning power: $p")
+        # println("Beginning power: $p")
         mat_pow = matrixMultiply(mat, mat_pow; threaded = threaded)
     end
     return mat_pow
