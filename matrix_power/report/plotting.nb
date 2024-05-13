@@ -1,0 +1,206 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6932,        196]
+NotebookOptionsPosition[      5957,        172]
+NotebookOutlinePosition[      6351,        188]
+CellTagsIndexPosition[      6308,        185]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"data", "=", 
+  RowBox[{
+  "SemanticImport", "[", 
+   "\"\</home/nondairyneutrino/hpc/matrix_power/bench/benchmarks.csv\>\"", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.921954856877187*^9, 3.921954858113681*^9}, {
+  3.9219549878718767`*^9, 3.921955024761704*^9}, {3.921955147665855*^9, 
+  3.921955154130042*^9}},
+ CellLabel->"In[87]:=",ExpressionUUID->"599007c9-ac56-4f76-b6aa-1133b5579bae"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fortranData", "=", 
+   RowBox[{"data", "[", 
+    RowBox[{"[", 
+     RowBox[{";;", ";;", "2"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pythonData", "  ", "=", 
+   RowBox[{"data", "[", 
+    RowBox[{"[", 
+     RowBox[{"2", ";;", ";;", "2"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.921955027166133*^9, 3.92195507884435*^9}, {
+  3.921955343819607*^9, 3.921955352499505*^9}},
+ CellLabel->"In[88]:=",ExpressionUUID->"d38b57cf-84a3-459b-b203-ad88e229dce6"],
+
+Cell[CellGroupData[{
+
+Cell["Fortran dimension", "Section",
+ CellChangeTimes->{{3.921955540447176*^9, 
+  3.921955542248157*^9}},ExpressionUUID->"c3e88955-0471-4d06-a07b-\
+dcdf708281db"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fd", "=", 
+   RowBox[{"fortranData", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{";;", ";;", "10"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<dimension\>\"", ",", "\"\<time(s)\>\""}], "}"}]}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pd", "=", 
+   RowBox[{"pythonData", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{";;", ";;", "10"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<dimension\>\"", ",", "\"\<time(s)\>\""}], "}"}]}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListLinePlot", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"fd", ",", "pd", ",", 
+     RowBox[{"Transpose", "@", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Range", "[", 
+         RowBox[{"100", ",", "300"}], "]"}], ",", 
+        RowBox[{"2.5", "*", "100", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Range", "[", 
+            RowBox[{"100", ",", "300"}], "]"}], "^", "3"}], "/", 
+          RowBox[{"10", "^", "9"}]}]}]}], "}"}]}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"AxesLabel", "->", "Automatic"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotLegends", "->", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Fortran\>\"", ",", " ", "\"\<Python\>\"", ",", 
+      "\"\<Predicted\>\""}], "}"}]}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotLabel", "->", "\"\<Power = 100\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"PlotRange", "->", "All"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotStyle", "->", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", "Automatic", ",", "Dashed"}], "}"}]}]}], 
+  "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{
+  "\"\</home/nondairyneutrino/hpc/matrix_power/report/images/dimension.png\>\"\
+", ",", "%"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.921955199451598*^9, 3.9219554026837797`*^9}, {
+  3.921955469455131*^9, 3.921955489970945*^9}, {3.921955701421317*^9, 
+  3.921955760455027*^9}, {3.921955882469331*^9, 3.921955882609316*^9}, {
+  3.921958332067596*^9, 3.921958488055805*^9}, {3.921958526270199*^9, 
+  3.921958686074029*^9}},
+ CellLabel->
+  "In[237]:=",ExpressionUUID->"fd1576d7-5e30-43e7-abd4-3cc13bdfa9e8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fortran power", "Section",
+ CellChangeTimes->{{3.9219555338934803`*^9, 
+  3.9219555358752403`*^9}},ExpressionUUID->"3c312ce6-fbf7-4c27-b06d-\
+8aeb8ad4ae42"],
+
+Cell[BoxData["fortranData"], "Input",
+ CellLabel->"In[94]:=",ExpressionUUID->"05c49189-e3a6-403e-8ad1-38eec746c260"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", 
+  RowBox[{"fd", ",", "pd"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fd", "=", 
+   RowBox[{"fortranData", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "9"}], ";;"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<power\>\"", ",", "\"\<time(s)\>\""}], "}"}]}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pd", "=", 
+   RowBox[{"pythonData", "[", 
+    RowBox[{"[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "9"}], ";;"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<power\>\"", ",", "\"\<time(s)\>\""}], "}"}]}], "]"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"fd", ",", "pd"}], "}"}], ",", 
+   RowBox[{"AxesLabel", "->", "Automatic"}], ",", 
+   RowBox[{"PlotLegends", "->", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Fortran\>\"", ",", " ", "\"\<Python\>\""}], "}"}]}], ",", 
+   RowBox[{"PlotLabel", "->", "\"\<Dimension = 300\>\""}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{
+  "\"\</home/nondairyneutrino/hpc/matrix_power/report/images/power.png\>\"", 
+   ",", "%"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.921955199451598*^9, 3.9219554026837797`*^9}, {
+   3.921955469455131*^9, 3.921955489970945*^9}, {3.921955701421317*^9, 
+   3.921955760455027*^9}, {3.921955795669475*^9, 3.921955831409451*^9}, {
+   3.921955888740267*^9, 3.9219558932417297`*^9}, {3.921955930974429*^9, 
+   3.921955935739002*^9}, 3.9219559800359173`*^9, {3.921956064512409*^9, 
+   3.921956159091915*^9}},
+ CellLabel->
+  "In[126]:=",ExpressionUUID->"d29e113c-2e62-4f16-a0b4-1193b5668281"]
+}, Open  ]]
+},
+WindowSize->{1920, 1044},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Linux x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4b8d9a26-b847-4870-b539-911c054893d8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 416, 9, 29, "Input",ExpressionUUID->"599007c9-ac56-4f76-b6aa-1133b5579bae"],
+Cell[977, 31, 533, 14, 50, "Input",ExpressionUUID->"d38b57cf-84a3-459b-b203-ad88e229dce6"],
+Cell[CellGroupData[{
+Cell[1535, 49, 162, 3, 72, "Section",ExpressionUUID->"c3e88955-0471-4d06-a07b-dcdf708281db"],
+Cell[1700, 54, 2244, 58, 239, "Input",ExpressionUUID->"fd1576d7-5e30-43e7-abd4-3cc13bdfa9e8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3981, 117, 162, 3, 72, "Section",ExpressionUUID->"3c312ce6-fbf7-4c27-b06d-8aeb8ad4ae42"],
+Cell[4146, 122, 116, 1, 29, "Input",ExpressionUUID->"05c49189-e3a6-403e-8ad1-38eec746c260"],
+Cell[4265, 125, 1676, 44, 112, "Input",ExpressionUUID->"d29e113c-2e62-4f16-a0b4-1193b5668281"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

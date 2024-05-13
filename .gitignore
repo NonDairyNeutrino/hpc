@@ -362,4 +362,4 @@ TSWLatexianTemp*
 
 # End of https://www.toptal.com/developers/gitignore/api/fortran,cmake,latex
 *.tar.gz
-*.nb
+# *.nb
