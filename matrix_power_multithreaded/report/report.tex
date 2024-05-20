@@ -27,11 +27,9 @@
 
 \section{Introduction}
 
-    \begin{itemize}
-        \item Many things can benefit from parallel execution
-        \item Matrix multiplication is ``embarissingly parallel''
-        \item Makes it a good benchmark to compare sequential execution to parallel
-    \end{itemize}
+    There are many applications which can greatly benefit from being executed in parallel.  The ``best'' of these are those that are ``embarissingly parallel'', in which no data needs to be shared between threads.  One such context is that of matrix multiplication.  Matrix multiplication and matrix powers also serve as an excellent cases on which to highlight the differences that can be gained from parallel execution compared to sequential.
+
+    Parallelism as it is normally implemented for a task such as matrix multiplication comes in the form of \emph{multithreading}.  Multithreading is the act of implementing a program in such a way that it makes use of the extra processing units in the CPU at the same time.  There is also multi-\emph{processing}, which is out of the scope of this investigation, but otherwise requires the use of message passing between different regions in memory.
 
 \section{Methods}
 
@@ -57,7 +55,7 @@
         \centering
         \begin{tabular}{|c||c|c|c|c|c|}
             \hline
-            Parallelism & Rows & Columns & Summands & Complexity & Matrix Power Complexity \\
+            Parallelism & Rows & Columns & Summands & Complexity & Power Complexity \\
             \hline
             \hline
             Sequential & $N$  & $N$     & $N$      & $O(N^3)$    & $O(p N^3)$   \\
@@ -75,7 +73,7 @@
 
     For any form of parallelism (none, row, column, or element), when considering the \emph{power} $p$ of a matrix, the runtime complexity is simply linearly scaled by $p$.  This additional linear factor arises from each \verb|for| loop needing to be evaluated $p$ times, essentially creating another \verb|for| loop in $p$.  Algorithm \ref{alg:parallelMatrixPower} shows how algorithm \ref{alg:parallelMatrixMultiplication} can be modified to yield the power of matrix, while also highlighting how the runtime complexity changes.
 
-    \begin{algorithm}[h]
+    \begin{algorithm}[h!]
         \caption{Row-parallelized matrix power using Julia's \texttt{Threads.@threads}}
         \KwIn{$N\times N$ Matrix A, Power $P$}
         \KwOut{Matrix C of zeros}
@@ -91,6 +89,8 @@
         \label{alg:parallelMatrixPower}
     \end{algorithm}
 
+    Finally, the results shown here are using the \verb|@elapsed| macro in Julia.  The \verb|time()| function, as it is in C, was also used but did not show differnt results.
+
 \section{Results}
 
     Figures (\ref{fig:small_dim}, \ref{fig:med_dim}, \ref{fig:big_dim}) show the timings of matrix powers for different regions of the dimension-power space.  Figure (\ref{fig:small_dim}) shows the comparison between the sequential and paralleized matrix powers for different forms such as element-wise parallelism, row-wise, and column-wise.  Additionally, the relative timings, as compared to the sequential execution, are also displayed for comparison.  The other figures follow the same scheme.
@@ -102,14 +102,14 @@
         \label{fig:small_dim}
     \end{figure}
 
-    \begin{figure}[h]
+    \begin{figure}[h!]
         \centering
         \includegraphics[width=0.75\textwidth]{images/dimension.png}
         \caption{Benchmarking for different forms of parallelism over matrix dimension, and a power of 100}
         \label{fig:med_dim}
     \end{figure}
 
-    \begin{figure}[h]
+    \begin{figure}[h!]
         \centering
         \includegraphics[width=0.75\textwidth]{images/big_dim.png}
         \caption{Benchmarking for different forms of parallelism over large matrix dimensions, and a power of 10}
@@ -127,7 +127,7 @@
 
     The results in figures (\ref{fig:med_dim}, \ref{fig:power}, \ref{fig:small_dim}) were gathered on a machine with the specifications shown in table \ref{tbl:homeSpecs}, while the results in figure (\ref{fig:big_dim}) were gathered on a machine with specifications as show in table (\ref{tbl:officeSpecs}). 
 
-    \begin{table}[h]
+    \begin{table}[h!]
         \centering
         \begin{tabular}{|c||c|c|c|c|c|}
             \hline
@@ -150,7 +150,7 @@
         \label{tbl:homeSpecs}
     \end{table}
 
-    \begin{table}[h]
+    \begin{table}[h!]
         \centering
         \begin{tabular}{|c||c|c|c|c|c|}
             \hline
@@ -171,21 +171,20 @@
         \label{tbl:officeSpecs}
     \end{table}
 
+    \clearpage
+    \pagebreak
 \section{Discussion}
-
     
-    While each figure could not more clearly suggest that using multiple threads to execute matrix multiplications is preferred when it comes to execution time, there are discrepancies between them.  Figure (\ref{fig:small_dim}) shows the parallel methods executing in only about 50\% of the time compared to the sequential version.  Compared to the over-50\% for large-dimensions (figure (\ref{fig:big_dim})) or even 80\% (wow!) reduction for medium-dimensions (figure \ref{fig:med_dim})
+    While each figure could not more clearly suggest that using multiple threads to execute matrix multiplications results in drastically smaller execution times, there are discrepancies between them.  When considering matrices with a ``medium'' dimension as in figure (\ref{fig:med_dim}), the execution time of multiplication is quite staggering at around an 80\% reduction in execution time.  This is in contrast to the timings found for ``small'' matrices as in figure (\ref{fig:small_dim}) where there was only a reduction of around 50\%.  Assuming this trend continues, one should assume the timings for ``large'' matrices (as in figure (\ref{fig:big_dim})) should yield an even larger reduction in execution time.  Figure (\ref{fig:big_dim}) though does not show a consistency in this trend, only showing a reduction by about 50\%.  There could be many factors causing this discrepancy, but most notably is the use of a different machine.  The large-matrix timings were found on a machine with specifications as shown in table (\ref{tbl:officeSpecs}), whereas the other results were found on a machine with specifications as shown in figure (\ref{tbl:homeSpecs}).  The most relevant difference between these two machines is the number of cores in the CPU: the large-matrix machine only used 4 cores and 4 threads at 3.2 GHz while the medium-matrix machine used 20 cores with 20 threads at 5.2 GHz.  In order to accurately extrapolate a trend for these results, the large-matrix timings would need to be evaluated on the same machine as the small- and medium-matrix results.  
+    
+    The results in each of varying-dimension cases are consistent with the prediction that the execution time of sequential matrix powers depends cubically on the dimension of the matrix.  Likewise, the execution time of matrix powers when evaluated in row- or column-wise parallel depends quadratically on the dimension of the matrix.  As for element-wise parallelism, the prediction is that the execution time should scale linearly (assuming there is a core for every thread), but each of the dimension figures (\ref{fig:small_dim}, \ref{fig:med_dim}, \ref{fig:big_dim}) all show the execution time of the element-wise parallelism to match with the row- and column-wise results.  This discrepancy between the prediction and experiment certainly warrants further investigation.  The results as shown in figure (\ref{fig:power}) are consistent with the prediction at the execution time of matrix powers should increase linearly with the power.
 
 \section{Conclusion}
 
-    \begin{itemize}
-        \item a lot of applications take a long time because a lot of things need to be done
-        \item these applications can benefit from parallelism via multithreading
-        \item multithreading can be hard to implement
-        \item sometimes it can be easier when the problem is embarissingly parallel
-        \item new languages make parallelism trivial
-        \item parallel implementation can save potentially massive amounts of time
-        \item further parallelism and performance can be achieved with GPU programming like CUDA
-    \end{itemize}
+    Many applications can benefit from being executed in parallel over multiple threads.  A subset of these applications require the use of \emph{many} threads in order to execute in a reasonable time.  Low level approaches like C's \verb|pthread_create|, \verb|pthread_join|, etc. are excellent resources when the need arises to have direct control over the creation, synchronization, and management of threads on a near hardware level.  This capability, though not using pthreads, is further highlighted when using massively parallel architecture such as a GPU with the CUDA parallel computing framework.  For other applications, a higher level approach, such as using Julia, is sufficient and allows for more rapid development with minimal introduced execution overhead.
+
+    Some of the aforementioned applications are so-called ``embarissingly parallel'', such as matrix multiplication.  It is in these applications that creating multithreaded algorithms and implementations is easy.  Other applications, namely those in which the threads need to share data by either reading or writing concurrently, require much more sophisticated approaches utilizing tools such as mutex locks or atomic variables.  Though when done properly, the extra work can lead to massive reduction in execution time.
+
+    By far and away, the most substantial effect parallelism has on an execution is the massive reduction in exeuction time.  As with matrix multiplication, the differences between a sequential implementation and a parallel implementation could lead to 80\% reduction in computation time.  For example, in the case of considering an autonomous vehicle, it would be best for the instructions to be evaluated in parallel so in the case where a pedestrian is in the way, there is minimal time between the machine gathering the data, evaluting, and stopping.  Other applications, such as evaluating the terms of the Fibonacci sequence would not benefit from parallelism because it is inherently a recursive algorithm and thus must be done sequentially.  Ultimately, there are many applications where the use of parallelism would greatly (80\%!) reduce the time it takes to yield a result, but there are many others where paralleism is impossible.
 
 \end{document}

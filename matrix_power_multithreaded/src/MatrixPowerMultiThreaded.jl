@@ -5,9 +5,21 @@ include("matrix.jl") # use definitions from matrix.jl
 using LinearAlgebra: I # include only the identity matrix constructor
 
 function julia_main() :: Cint
-    dimension, power, isRandom = parse.(Int, ARGS)
+    try
+        # pass in and convert arguments from the command line in the tuple ARGS to 64 bit integers
+        dimension, power, isRandom = parse.(Int, ARGS)
+        @assert dimension >= 1 "Matrix dimension must be at least 1"
+        @assert power >= 2 "Matrix power must be at least 2"
+        @assert isRandom == 0 || isRandom == 1 "Please provide whether to use an identity matrix"
+    catch e
+        if e isa ArgumentError
+            println("Arguments must be positive integers")
+        elseif e isa AssertionError
+            display(e)
+        end
+    end
 
-    if Bool(isRandom)
+    if Bool(isRandom) # construct a boolean from isRandom which is either 0 or 1
         # square matrix of random number between 0 and 1
         # defaults to Float64
         mat = rand(dimension, dimension)

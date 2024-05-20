@@ -1,4 +1,9 @@
 # matrix multiplication
+"""
+    dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
+
+Custom implementation of the dot product of two vectors
+"""
 function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
     dot_product = 0
     for i in 1:length(vec1)
@@ -7,7 +12,17 @@ function dot(vec1 :: Vector{Float64}, vec2 :: Vector{Float64}) :: Float64
     return dot_product
 end
 
-function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none")
+"""
+    matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none") :: Matrix{Float64}
+
+Custom implementation of matrix multiplication between two matrices.
+Threading is chosen via the 'threaded' keyword and can takes any of the following values:
+'none' - sequential evalatuion
+'row' - calculate each row in parallel
+'column - calcualte each column in parallel
+'element' - calculate each element in parallel
+"""
+function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; threaded="none") :: Matrix{Float64}
     # initialize product matrix
     product = Matrix{Float64}(undef, size(mat1)[1], size(mat2)[2])
     # choose behavior based on specified threading
@@ -51,7 +66,12 @@ function matrixMultiply(mat1 :: Matrix{Float64}, mat2 :: Matrix{Float64}; thread
     return product
 end
 
-function matrixPower(mat :: Matrix{Float64}, power :: Int; threaded = "none")
+"""
+    matrixPower(mat :: Matrix{Float64}, power :: Int; threaded = "none") :: Matrix{Float64}
+
+Custom implementation of raising a matrix to a power through the use of matrix multiplication
+"""
+function matrixPower(mat :: Matrix{Float64}, power :: Int; threaded = "none") :: Matrix{Float64}
     mat_pow = mat
     for p in 2:power
         # println("Beginning power: $p")
