@@ -138,7 +138,37 @@
 
         \subsubsection{Multi-Qubit Gates}
 
-            
+            \begin{itemize}
+                \item Classical multi-bit gates are \verb|AND, OR, XOR, NAND, NOR|
+                \item The proto-typical quantum multi-bit gate is \emph{controlled not} gate \verb|CNOT|.
+                \item The controlled not gate uses a \emph{control} bit, and a \emph{target} bit.
+                \item Controlled not can be described in the following ways:
+                    \begin{itemize}
+                        \item If the control bit is 0, the target bit is left alone.  If the control bit is 1, the target bit is flipped.
+                        \item Mathematically, 
+                        \begin{equation}
+                            \ket{00} \to \ket{00},\, \ket{01} \to \ket{01},\, \ket{10} \to \ket{11},\, \ket{11} \to \ket{10}
+                        \end{equation}
+                        or
+                        \begin{equation}
+                            U_{CN} \ket{\psi} = \begin{bmatrix}
+                                1 & 0 & 0 & 0 \\
+                                0 & 1 & 0 & 0 \\
+                                0 & 0 & 0 & 1 \\
+                                0 & 0 & 1 & 0
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                                \alpha_{00} \\
+                                \alpha_{01} \\
+                                \alpha_{10} \\
+                                \alpha_{11}
+                            \end{bmatrix}
+                        \end{equation}
+                        where $\ket{\psi} = \alpha_{00} \ket{00} + \alpha_{01} \ket{01} + \alpha_{10} \ket{10} + \alpha_{11} + \ket{11}$.
+                        \item A generalization of the classical \verb|XOR| gate where the control and target qubits are \verb|XOR|ed and the result is store in the target qubit
+                        \item 
+                    \end{itemize}
+            \end{itemize}
 
     \subsection{Quantum Circuits}
 
