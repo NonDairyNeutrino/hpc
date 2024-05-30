@@ -32,7 +32,7 @@
 
 \institute[CWU]
 {
-  Faculty of Physics\\
+%   Faculty of Physics\\
   Central Washington University
 %   \and
 %   \inst{2}%
@@ -220,10 +220,22 @@
     \frametitle{Quantum Computation - Circuits}
     \begin{columns}
         \begin{column}{0.5\textwidth}
-            
+            \begin{itemize}
+                \item Sequence of gates
+                \item Read left to right
+                \item Lines are ``wires''
+                \item No loops
+                \item Wires can't connect to conserve information
+                \item Can connect from one bit (black dot) to a target bit ($\oplus$)
+                \item $\oplus$ represents addition mod 2 
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=\textwidth]{images/swap_circuit.png}
+                \caption{A quantum circuit to swap the states of two given qubits (left) and its compact notation (right).}
+            \end{figure}
         \end{column}
     \end{columns}
 \end{frame}
@@ -232,58 +244,55 @@
     \frametitle{Quantum Algorithms - The Quantum Fourier Transform}
     \begin{columns}
         \begin{column}{0.5\textwidth}
-            
+            \begin{itemize}
+                \item Classical DFT $y_k \equiv \dfrac{1}{\sqrt{N}} \sum\limits_{j = 0}^{N - 1} e^{2 \pi i j k / N} x_j$
+                \item FFT uses $\Theta(N 2^N)$ gates
+                \item Quantum FT $\ket{j} \to \dfrac{1}{\sqrt{2^N}} \sum\limits_{k = 0}^{2^N - 1} e^{2 \pi i j k / 2^N} \ket{k}$
+                \item QFT uses $\Theta(N^2)$ gates
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{images/QFT_3bit.png}
+                \caption{A 3-qubit quantum Fourier transform circuit.  $S,T$ are the phase and $\pi/8$ gates, respectively.}
+            \end{figure}
         \end{column}
     \end{columns}
+    \begin{alertblock}{}
+        \centering Quantum computers calculate the Fourier Transform with \emph{exponentially} fewer operations
+    \end{alertblock}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Quantum Algorithms - Quantum Search}
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
+% \begin{frame}
+%     \frametitle{Quantum Cryptography}
+%     \begin{columns}
+%         \begin{column}{0.5\textwidth}
             
-        \end{column}
-        \begin{column}{0.5\textwidth}
+%         \end{column}
+%         \begin{column}{0.5\textwidth}
             
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Quantum Cryptography}
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
-            
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            
-        \end{column}
-    \end{columns}
-\end{frame}
+%         \end{column}
+%     \end{columns}
+% \end{frame}
 
 \begin{frame}
     \frametitle{Demo - Qiskit}
     \begin{columns}
         \begin{column}{0.5\textwidth}
-            
+            \begin{itemize}
+                \item Many quantum cloud computing platforms
+                \item Most popular is Qiskit by IBM
+                \item Allows jobs to be submitted to IBM's quantum computer with ~127 qubits
+                \item Demo
+            \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Honorable Mention - CUDA-Q}
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
-            
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            
+            \begin{figure}[placement]
+                \centering
+                \includegraphics[height=0.66\textheight]{images/quantum_computer.jpg}
+                \caption{A real quantum computer} %\href{https://www.nytimes.com/2023/06/14/science/ibm-quantum-computing.html}{SOURCE}}
+            \end{figure}
         \end{column}
     \end{columns}
 \end{frame}
@@ -291,7 +300,15 @@
 \begin{frame}
     \frametitle{Conclusion}
 
-    
+    \begin{itemize}
+        \item Quantum computation is different at the most fundamental levels
+        \item A collection of $N$ qubits stores $2^N$ values
+        \item Every quantum gate can be made of CNOT and single-qubit gates
+        \item Quantum gates conserve information
+        \item A quantum circuit is a sequence of applied quantum gates
+        \item The quantum Fourier Transform requires exponentially fewer operations
+        \item There are real quantum computers in the world and we can use them with Qiskit!
+    \end{itemize}
 
 \end{frame}
 
