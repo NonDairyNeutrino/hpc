@@ -1,0 +1,10 @@
+TODO
+- implement matrices with doubly-linked lists only for 2D arrays
+-- maybe use https://rosettacode.org/wiki/Doubly-linked_list/Definition#Fortran
+- use linked lists for large matrices
+- calculate time complexity of power
+- plot run time for different dimensions and powers
+- write report
+- report should be named FirstName_LastName_Lab1.pdf
+- use different time functions: gettimeofday(), time(), clock(), etc.
+- more error handling?

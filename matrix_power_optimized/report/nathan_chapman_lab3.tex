@@ -1,0 +1,168 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.625in]{geometry}
+\usepackage{parskip, setspace}
+\setstretch{1.5}
+\usepackage{amsmath, amsfonts}
+%\numberwithin{equation}{subsection}
+\usepackage{graphicx, caption, wrapfig}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage[nosemicolon,ruled]{algorithm2e}
+
+\usepackage{biblatex}
+\addbibresource{bib.bib}
+
+\renewcommand{\arraystretch}{1.5}
+
+\title{\Large \vspace{-0.625in} CS 530: High-Performance Computing \\ Optimizing Matrix Multiplication \vspace{-0.35in}}
+\author{Nathan Chapman \vspace{-0.15in} \\ {\normalsize Central Washington University}}
+\date{\normalsize \vspace{-0.15in}\today}
+
+\begin{document}
+
+\maketitle
+
+    % \begin{center}
+    % Abstract \\
+    
+    % \end{center}
+
+\tableofcontents
+
+% \pagebreak
+
+\section{Introduction}
+
+    There are many ways to decrease the execution time of a program.  The biggest source of such a decrease is to execute the program in parallel.  Though, not all program can benefit from being run in parallel.  In such sequential cases, decreases in execution time can be gained from other sources, such as optimization of sequential implementations.  If these optimizations are to be implemented, there are two ways that can be done: automatically by the compiler, or manually structuring the source code in such a way so-as-to not fall into the traps of inefficiency.  There are many compilers that can be used to process source code either written in C/C++ or Fortran, possibly the most popular being the GNU compiler collection (gcc).  gcc comes with a suite of different levels of automatic optimzations that be easily passed without further consideration.  If the source code is to be optimized manually, there are several concepts to be considered when implementing algorithms.  These include, but are not limited to, ideas such as how many values can be held in a single CPU-register at a time (which can handled with loop-fission or -fusion), doing the same operation over and over again inside a loop (which can be handled with methods such as loop peeling), the cost of calculating versus loading a value from memory.  These techniques, whether using automatic compiler optimizations or writing manually optimized code, can provide programs that execute in substantionally less time than their ``naive'' un-optimized counterparts.
+
+\pagebreak
+
+\section{Methods}
+
+    \subsection{Matrix Multiplication}
+
+        The mathematical definition of matrix multiplication takes the form
+
+        \begin{equation} \label{eq:matrix_power}
+            (A B)_{i,j} = \sum_{k = 1}^{L} A_{ik} B_{kj}
+        \end{equation}
+
+        where $A,B$ are $N \times L$ and $L \times M$ matrices, respectively, and $(A B)_{i,j}$ is the element of the $i$-th row and $j$-th column of the product.  Because this definition is for $N$ rows, $M$ columns, and $L$ elements in the sum, the total number of either additions or multiplications is $N \times M \times L$.  For the multiplication of an $N \times N$ square matrix with itself (a ``matrix power''), this leads to $N^3$ operations for a single multiplication.  If this is done multiple times $p$ to create an arbitrary matrix power $A^p$ of an $N \times N$ matrix $A$, the number of total operations needed is $p N^3$.  Using asymptotic notation, this means that matrix powers are $\mathcal{O}(p N^3)$.  The algorithm for matrix multiplication and matrix power are shown in algorithms \ref{alg:multiplication} and \ref{alg:power}, respectively.
+
+        \begin{algorithm}
+            \caption{Matrix Multiplication \label{alg:multiplication}}
+            \KwIn{$N \times L$ Matrix $A$, $L \times M$ Matrix $B$}
+            \KwOut{$N \times M$ Matrix C}
+            \For{$i \leq N$}{
+                \For{$j \leq M$}{
+                    \For{$k \leq L$}{
+                        C[i,j] $\gets$ C[i,j] + A[i,k] * B[k,j]
+                    }
+                }
+            }
+        \end{algorithm}
+
+        \begin{algorithm}
+            \caption{Matrix Power \label{alg:power}}
+            \KwIn{$N \times N$ Matrix A, Integer $p > 0$}
+            \KwOut{$N \times N$ Matrix P}
+            P $\gets$ A \;
+            \For{$i \leq p - 1$}{
+                P $\gets$ multiply P and A using matrix multiplication
+            }
+        \end{algorithm}
+
+        In order to test the efficiencies of the Fortran, such matrices need to be initialized.  For this investigation, these matrices were initialized using random numbers.  The default psuedo-random number generator in Fortran is xoshiro256**.  All elements of the initial matrices are between 0 and 1; negative numbers could also be used to mitigate overflow in their data-types as the elements of the matrix-product grow astronomically large.
+
+\pagebreak
+    \subsection{Automatic Optimization}
+
+        There are many ways to automatically optimize source code of a program.  When using a compiled language such as C/C++ or Fortran, optimizations can be done automatically by the compiler.  In the case of the GNU Compiler Collection (gcc), there are several easily-passed, command-line flags.  While there are many options for fine tuning, there are just a few notable options that enable entire collections of these options for different levels of optimization.  These options are given by the \verb|-On| flag, where \verb|n| is 0,1,2,3, or \verb|fast|.  Each of these, in increasing order, provide more optimizations and let the compiler further handle and manipulate the source code once pre-processing is started.  Below is a list of summaries of these optimization flags (as used in gcc and gfortran) with a few of the more-easily-understandable fine-tuning options that are applied.
+
+        \begin{itemize}
+            \item \verb|-O0|
+                \begin{itemize}
+                    \item No optimization of the given source code is done.
+                    \item The default option i.e. the option used when no other optimization flag is given
+                    \item This level of compiler optimization was used in calculating previous results.
+                \end{itemize}
+            \item \verb|-O1| 
+                \begin{itemize}
+                    \item Provides slight optimization of the source code
+                    \item Reduces the size of the generated assembly code
+                    \item Reduces the length of time the program takes to execute
+                    \item Only provides changes that will not increase compile time by a large amount
+                    \item \verb|-finline-functions-called-once|: If a region of code only calls a specific function a single time, the compiler replaces the function call with the body of the function (known as \emph{inlining}).  This reduces execution time because there are fewer queries to memory and fewer allocations on the call-stack.
+                \end{itemize}
+            \item \verb|-O2|
+                \begin{itemize}
+                    \item Performs nearly all supported optimizations that do not involve a space-speed tradeoff.
+                    \item Reduces the length of time the program takes to execute
+                    \item Increases the amount of time the program will take to compile
+                    \item Includes all flags of \verb|-O1|
+                    \item \verb|-finline-functions| considers all functions for inlining, automatically determining which are worth inlining.
+                    \item \verb|-finline-small-functions| inlines functions when including the explicit body would result in fewer operations than including a call to the function.
+                    \item \verb|-findirect-inlining| inlines calls generated by \verb|finline-functions| or \verb|-finline-small-functions|.
+                    \item \verb|-fpartial-inlining| inlines \emph{parts} of functions when generated by \verb|finline-functions| or\\ \verb|-finline-small-functions|
+                \end{itemize}
+            \item \verb|-O3|
+                \begin{itemize}
+                    \item Performs many optimizations at the cost of a considerably greater compilation time
+                    \item Includes all flags of \verb|-O2|
+                    \item \verb|-floop-interchange| interchanges nested loops.  This flag can improve cache performance on loop nest and allow further loop optimizations, like vectorization, to take place. For example
+                    \begin{verbatim}
+for (int i = 0; i < N; i++)
+  for (int j = 0; j < N; j++)
+    for (int k = 0; k < N; k++)
+      c[i][j] = c[i][j] + a[i][k]*b[k][j];
+                    \end{verbatim}
+                    transforms to 
+                    \begin{verbatim}
+for (int i = 0; i < N; i++)
+  for (int k = 0; k < N; k++)
+    for (int j = 0; j < N; j++)
+      c[i][j] = c[i][j] + a[i][k]*b[k][j];
+                    \end{verbatim}
+                    where the j and k loops have been swapped
+                    \item \verb|-floop-unroll-and-jam| unrolls outer loops and fuses the inner loops
+                    \item \verb|-fpeel-loops| peels loops that don't roll much.  Additionally unrolls small loops.
+                    \item \verb|-fpredictive-commoning| reuses computations (especially memory loads and stores) performed in previous iterations of loops. 
+                    \item \verb|-fsplit-loops| splits loops if there's a condition that's always true for one side of the iteration space, and false for the other.
+                    \item \verb|-fvect-cost-model=dynamic| allows for automatic-vectorization when a considered loop has a number of iterations that will likely execute faster than when executing the original scalar loop.
+                    \item \verb|-fversion-loops-for-strides| if a loop iterates over an array with a variable stride, create another version of the loop that assumes the stride is always one. For example: 
+                    \begin{verbatim}
+for (int i = 0; i < n; ++i)
+  x[i * stride] = ...;
+                    \end{verbatim}
+                    becomes
+                    \begin{verbatim}
+if (stride == 1)
+  for (int i = 0; i < n; ++i)
+    x[i] = ...;
+else
+  for (int i = 0; i < n; ++i)
+    x[i * stride] = ...;
+                    \end{verbatim}
+                    This is particularly useful for assumed-shape arrays in Fortran where (for example) it allows better vectorization assuming contiguous accesses.
+                \end{itemize}
+            \item \verb|-Ofast|
+                \begin{itemize}
+                    \item \verb|-ffast-math| enables non-IEEE floating point operations, but could lead to incorrect values in a program that depends on IEEE specifications.
+                    \item \verb|-fallow-store-data-races| provides optimizations that can introduce data-races.  Can be used safely in single-threaded applications.
+                    \item (Fortran only) \verb|-fstack-arrays| allocates all local-arrays from stack memory.
+                \end{itemize}
+        \end{itemize}
+
+    \subsection{Manual Optimization}
+
+\section{Results}
+
+\section{Discussion}
+
+\section{Conclusion}
+
+\nocite{*}
+\printbibliography
+
+\end{document}
