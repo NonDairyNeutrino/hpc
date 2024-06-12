@@ -1,0 +1,8 @@
+- A supercomputer is more than JUST a large number of CPUs
+- There are different architectures of the whole system that have substantial influence on the performance of the programs.
+- Other factors that go into performance are:
+	- Data Dependencies
+	- Memory Sharing between processors
+	- Redesign of algorithms
+	- Message passing between processes
+- Benchmarking takes into account not only the compilation of a program but also the hardware its run on and also the other tasks that were running at the same time, etc.
