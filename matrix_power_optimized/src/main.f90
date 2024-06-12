@@ -28,7 +28,6 @@ program allocatable
     !> create base matrix
     allocate(matrix(matrix_dimension, matrix_dimension))
     if (is_id == 1) then
-
         !> create a matrix with 2s along the diagonal
         do i = 1, matrix_dimension
             do j = 1, matrix_dimension
@@ -46,18 +45,11 @@ program allocatable
 
     !> create matrix power
     allocate(power_matrix(matrix_dimension, matrix_dimension))
-
-    bench = .false. ! just for the time being
-    if (bench) then
-        ! begin timing here
-        power_matrix = matrix_power(matrix, power)
-        ! end timing here
-    else
-        power_matrix = matrix_power(matrix, power)
-    end if
+    !> evaluate
+    power_matrix = matrix_power(matrix, matrix_dimension, power)
 
     !> print matrix_power to the screen
-    !  call print_matrix(power_matrix)
+    call print_matrix(power_matrix)
 
     !> free memory used by matrices
     deallocate(power_matrix)

@@ -156,6 +156,19 @@ else
 
     \subsection{Manual Optimization}
 
+        \subsubsection{Memory Caching}
+
+            \begin{itemize}
+                \item Spatial Locality: Fortran is column-major in its multidimensional arrays, so to take advantage of compiler prefetching and quicker memory access, the left-most index should be associated with the innermost loop (so each column is traversed instead of each row)
+                \item Temporal Locality: 
+            \end{itemize}
+
+        \subsubsection{Miscillaneous}
+
+            \begin{itemize}
+                \item minimize indexing
+            \end{itemize}
+
 \section{Results}
 
 \section{Discussion}
