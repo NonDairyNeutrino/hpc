@@ -2,7 +2,7 @@
 
 #let title = "Scalable Parallel-in-Time Integration for Equations of Motion"
 #let gets   = sym.arrow.l
-#let cn     = [*\[CITATION NEEDED\]*]
+#let cn     = [*CN*]
 
 #set page(
   paper: "us-letter",
