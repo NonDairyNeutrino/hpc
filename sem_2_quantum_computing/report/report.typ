@@ -3,6 +3,7 @@
 #let title = "Scalable Parallel-in-Time Integration for Equations of Motion"
 #let gets   = sym.arrow.l
 #let cn     = text(red)[*CN*]
+#let us     = h(2pt)
 
 #set page(
   paper: "us-letter",
@@ -173,7 +174,7 @@ Subproblems $P_p$ take the same from as in @IVP, but instead using initial condi
 
 $ P_1 = {cal(L)(t, u, diff_t u, diff_t^2 u) = f(t), #h(11pt)  u(0) = u_1^0,  diff_t u(0) = v_1^0, #h(11pt) [t_0, t_0 + Delta t]}. $
 
-@prep_subproblems shows the steps of this process for a given IVP and integration algorithm i.e. "propagator", resulting in root solutions and and the collected subproblems.  With these subproblems in hand, the PA continues to its next stage: propagating these problems in parallel.
+@fig:prep_subproblems shows the pseudocode of this process for a given IVP and integration algorithm i.e. "propagator", resulting in root solutions and and the collected subproblems.  With these subproblems in hand, the PA continues to its next stage: propagating these problems in parallel.
 
 *Example:* Given the example IVP (@ex_eq) and the available threads,
 
@@ -188,6 +189,8 @@ $ P_p = {
   harpoon(v)(0) = harpoon(v)_p^0,   #h(11pt)
   [0 "s", 10 "s"]
 }. $
+
+The result of this process is shown in @diag:it_0.
 
 #figure(
   kind: "algorithm",
@@ -214,8 +217,20 @@ $ P_p = {
       + `subproblems[i]` #gets ivp on `subdomain` with initial values `pos0` and `vel0` for acceleration `P.acc`
     + *return* Solution for root problem with `pos_seq` and `vel_seq`, and array of subproblems `subproblems`
   ]
-) <prep_subproblems>
+) <fig:prep_subproblems>
 
+#v(1fr)
+
+#figure(
+  image(
+    "images/root_solution.png", 
+    width: 100%,
+    alt: "Plot showing the height of the ball vs time so that each subproblem is a column with its initial position as a blue dot at the start of each subdomain, and its velocity as a blue arrow coming from the respective dot.  The true solution is also shown with the same form but in black."
+  ),
+  caption: "The motion of a ball flying through the air can be partitioned in time to form several initial value problems, each with its own initial position and velocity (blue) determined by a fast integration method. Compared to the true solution (black), this solution is very inaccurate."
+) <diag:it_0>
+
+#pagebreak()
 === Parallel Propagation
 
   Use a coarse propagator $cal(C)$ (e.g., Symplectic-Euler with a large time step) and a fine propagator $cal(F)$ (e.g. Velocity-Verlet with a small time step). Solve each subproblem $p$ in parallel.
