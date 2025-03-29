@@ -237,7 +237,7 @@ The result of this process is shown in @diag:it_0.
 ) <diag:it_0>
 
 #pagebreak()
-=== Parallel Propagation
+=== Parallel Discretization & Propagation
 
 Because each of these subproblems is independent of the others, each can be solved in parallel; #lower([@sec:corrections]) addresses recombining their solutions to produce a larger solution to the root problem.  Though the subproblems are solved in parallel not once, but twice using a "_fine propagator_" $cal(F)$, and again using a "_coarse propagator_" $cal(C)$.  It should be noted that this coarse propagator $cal(C)$ does not need to be the same as what was used to construct the initial root solution $cal(C)_0$. 
 
@@ -248,9 +248,9 @@ Before each subproblem can be solved in parallel, they must first be discretized
 #figure(
   kind: "algorithm",
   supplement: [Alg],
-  caption: [Each subproblem can be discretized in parallel to allow for propagation.],
+  caption: [Each subproblem can be discretized in parallel.],
   pseudocode-list(
-    numbered-title: smallcaps[Parallel Discretization],
+    numbered-title: smallcaps[Parallel Discretization Kernel],
     booktabs: true, 
     hooks: 0.5em
   )[
@@ -264,6 +264,43 @@ Before each subproblem can be solved in parallel, they must first be discretized
     + *return*
   ]
 ) <alg:disc_kernel>
+\
+The subproblems can be solved by applying a traditional, sequential solver on each subproblem in its own thread.  Much like discretization process (@alg:disc_kernel), solving the subproblems is done in-place with respect to the position and velocity sequences.  This process is shown in @alg:prop_kernel and visually in 
+
+#figure(
+  kind: "algorithm",
+  supplement: [Alg],
+  caption: [Each subproblem can be propagated in parallel using a given solver.],
+  pseudocode-list(
+    numbered-title: smallcaps[Parallel Propagation Kernel],
+    booktabs: true, 
+    hooks: 0.5em
+  )[
+    - *INPUT:* A solver `solve`, acceleration function `acc`, \
+      sequence of `N` empty position vectors `pos_seq`, \
+      sequence of `N` empty velocity vectors `vel_seq`
+    - *OUTPUT:* Nothing
+    + 
+    + *for* `i` from 2 to `N - 1`
+      + `old_pos` #gets `pos_seq[i - 1]`
+      + `old_vel` #gets `vel_seq[i - 1]`
+      + `new_pos`, `new_vel` #gets `solve(old_pos, old_vel, acc, step)`
+      + `pos_seq[i]` #gets `new_pos`
+      + `vel_seq[i]` #gets `new_vel`
+  ]
+) <alg:prop_kernel>
+
+#figure(
+  // image(
+  //   "images/parallel_propagation.png",
+  //   width: 100%,
+  //   alt: ""
+  // ),
+  square(width: 50%, [some stuff]),
+  caption: [This is an image showing how each subproblem is solved at the same time.]
+)
+\
+*Example:* 
 
 #pagebreak()
 === Corrections <sec:corrections>
