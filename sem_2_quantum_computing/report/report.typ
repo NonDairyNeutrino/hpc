@@ -1,9 +1,10 @@
 #import "@preview/lovelace:0.3.0": *
 
 #let title = "Scalable Parallel-in-Time Integration for Equations of Motion"
-#let gets   = sym.arrow.l
-#let cn     = text(red)[*CN*]
-#let us     = h(2pt)
+#let gets  = sym.arrow.l
+#let cn    = text(red)[*CN*] // citation needed
+#let us    = h(2pt)          // unit space
+#let ex    = [*Example:*]
 
 #set page(
   paper: "us-letter",
